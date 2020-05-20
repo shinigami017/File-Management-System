@@ -1,0 +1,7 @@
+<%- include("partials/top") %>
+    <h1 class="mt-4 page-header">Dashboard</h1>
+    <p class="lead mb-3">Welcome
+        <%= currentUser.username %>
+    </p>
+    <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    <%- include ("partials/bottom") %>
