@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+
+/* Menu toggle button */
+
+#navBtn {
+    position: fixed;
+    right: 25px;
+    top: 25px;
+    /* bottom: 25px; */
+    border: none;
+    outline: none;
+    background-color: #042331;
+    background-color: #043608;
+    padding: 0 20px;
+    height: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+
+.line {
+    height: 3px;
+    width: 25px;
+    margin: 5px 0;
+    background-color: #fff;
+}
+
+.change .line1 {
+    transform: rotate(-45deg) translate(-25%, 150%);
+}
+
+.change .line2 {
+    opacity: 0;
+}
+
+.change .line3 {
+    transform: rotate(45deg) translate(-25%, -150%);
+}
+
+#navBtn:hover {
+    background-color: #075477;
+    background-color: #338a3af5;
+}
+
+
+/* Sidebar */
+
+.sidebar {
+    background: #042331;
+    background: #022c06;
+    background: #043608ec;
+    position: fixed;
+    height: 100%;
+    width: 325px;
+    overflow-y: auto;
+    left: -360px;
+    top: 105px;
+    /* transition: all 0.4s ease-in-out; */
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    list-style: none;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    padding-left: 35px;
+    background-color: #0a3e58e7;
+    background-color: #11811a;
+    border-left: 5px solid #0a3e58e7;
+    border-left: 5px solid #0e7c17e1;
+}
+
+.sidebar ul li:hover {
+    border-left: 5px solid #042331;
+    border-left: 5px solid #043608;
+}
+
+.sidebar i {
+    margin: 0 10px;
+    color: #EBE4E4;
+    position: relative;
+}
+
+.menu-dropdown-item,
+.menu-item-link {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    color: #F0EFEF;
+    font-size: 1.3rem;
+    cursor: pointer;
+    font-family: 'Roboto', serif;
+    padding: 15px 0 15px 20px;
+    border-bottom: 1.5px solid #000;
+}
+
+.menu-dropdown-item:hover,
+.menu-item-link:hover {
+    background-color: #075477;
+    background-color: #338a3af5;
+}
+
+.sidebar ul li a {
+    font-size: 1.1rem;
+}
+
+.showSidebar {
+    animation: showSidebar 0.6s forwards;
+}
+
+.closeSidebar {
+    animation: closeSidebar 0.6s forwards;
+}
+
+@keyframes showSidebar {
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes closeSidebar {
+    0% {
+        left: 0px;
+    }
+    100% {
+        width: 360px;
+        left: -360px;
+    }
+}
+
+
+/* Navbar */
+
+nav {
+    background-color: #fff;
+    position: fixed;
+    height: 105px;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.4s ease-in-out;
+}
+
+nav .logo {
+    margin-left: 5%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.logo .logo-icon {
+    border-radius: 10px;
+    height: 80px;
+    width: 90px;
+    align-self: center;
+    background: url(../img/dit-logo-tr-b.jpg) no-repeat;
+    background: url(../img/pc-logo.png) no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.logo .logo-title {
+    letter-spacing: 1px;
+    font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #021f04;
+    font-weight: bolder;
+}
+
+nav .nav-right {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    margin: 25px 0;
+    margin-right: 9rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-right .user-dropdown {
+    position: relative;
+}
+
+.dropdown-ul {
+    position: absolute;
+    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(255, 249, 241);
+    border: 1px solid #9b8860;
+    border-radius: 5px;
+}
+
+.user-dropdown button {
+    background: none;
+    outline: none;
+    border: none;
+    color: #041f2b;
+    text-decoration: none;
+    width: 200px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.user-dropdown button:hover {
+    color: #041f2bde;
+}
+
+.user-dropdown button i {
+    font-size: 20px;
+}
+
+.user-dropdown .user-icon {
+    font-size: 40px;
+}
+
+.dd-head {
+    margin: 0 10px;
+}
+
+.user-dropdown a {
+    color: #031c27;
+    font-size: 16px;
+    font-weight: 425;
+    letter-spacing: 1px;
+    text-decoration: none;
+    padding-left: 30px;
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+}
+
+.user-dropdown ul {
+    padding: 0;
+}
+
+.user-dropdown ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.user-dropdown ul li a:hover {
+    pointer-events: all;
+    background-color: rgb(250, 234, 212);
+}
+
+.user-dropdown ul li a i {
+    margin-right: 10px;
+}
+
+
+/* Section */
+
+section {
+    position: relative;
+    top: 105px;
+    transition: all .6s ease;
+}
+
+.shift-section {
+    margin-left: 325px;
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 767px) {
+    #navBtn {
+        /* top: unset; */
+        /* bottom: 15px; */
+        top: 15px;
+        right: 15px;
+    }
+    nav {
+        height: 85px;
+        align-items: center;
+        justify-content: space-between;
+    }
+    nav .logo {
+        margin-left: 5%;
+    }
+    nav .nav-right {
+        margin-right: 6.5rem;
+    }
+    .sidebar,
+    section {
+        top: 85px;
+    }
+    .dropdown-ul {
+        height: 160px;
+        width: 160px;
+    }
+    .user-dropdown button {
+        width: 160px;
+        font-size: 18px;
+    }
+    .user-dropdown button i {
+        font-size: 18px;
+    }
+    .user-dropdown .user-icon {
+        font-size: 30px;
+    }
+    .dd-head {
+        margin: 0 7px;
+    }
+    .user-dropdown a {
+        font-size: 16px;
+        padding-left: 20px;
+        line-height: 40px;
+    }
+    .user-dropdown ul li a i {
+        margin-right: 8px;
+    }
+}

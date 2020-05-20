@@ -1,10 +1,8 @@
 var express = require("express"),
     path = require("path"),
-    // cookieParser = require("cookie-parser"),
     bodyParser = require("body-parser"),
     flash = require("connect-flash"),
     session = require("express-session"),
-    // expressValidator = require("express-validator"),
     passport = require("passport"),
     mongoose = require("mongoose");
 
@@ -21,7 +19,6 @@ app.set("view engine", "ejs");
 // body parser setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser);
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -55,9 +52,11 @@ app.use(function(req, res, next) {
 
 // routes setup
 var indexRoute = require("./routes/index"),
+    homeRoute = require("./routes/home"),
     userRoute = require("./routes/users");
 app.use("/", indexRoute);
-app.use("/users", userRoute);
+app.use("/fms.edu.in", homeRoute);
+app.use("/fms.edu.in/users", userRoute);
 
 // Port Setup
 app.set("port", (process.env.PORT || 3000));

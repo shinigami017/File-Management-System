@@ -1,0 +1,133 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+nav {
+    background: transparent;
+    height: 100px;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.6s ease-in-out;
+}
+
+nav .logo {
+    margin-left: 5%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.logo .logo-icon {
+    border-radius: 10px;
+    height: 80px;
+    width: 90px;
+    align-self: center;
+    /* background: url(../img/dit-logo-tr-b.jpg) no-repeat; */
+    /* background: url(../img/pc-logo.png) no-repeat; */
+    /* background-size: contain; */
+    /* background-position: center; */
+    background-color: purple;
+}
+
+.logo .logo-title {
+    letter-spacing: 1px;
+    font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #021f04;
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+nav ul li {
+    align-items: center;
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+nav ul li a {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    padding: 10px 20px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+nav ul a:hover {
+    background-color: #1b9bff;
+    transition: 0.5s;
+}
+
+.checkbtn {
+    font-size: 30px;
+    color: white;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+    align-self: center;
+    transition: all 0.5s ease-in-out;
+}
+
+#check {
+    display: none;
+}
+
+@media (max-width: 858px) {
+    .logo img {
+        width: 60px;
+        height: 50px;
+    }
+    .checkbtn {
+        display: block;
+    }
+    ul {
+        position: fixed;
+        width: 100%;
+        background-color: #828283b0;
+        top: 100px;
+        left: -100%;
+        text-align: center;
+        transition: all 0.5s;
+    }
+    nav ul li {
+        display: block;
+        margin: 15px 5%;
+        line-height: 20px;
+    }
+    nav ul li a {
+        font-size: 18px;
+        padding: 7px 14px;
+    }
+    nav ul a:hover {
+        background: #0082e6;
+    }
+    #check:checked~ul {
+        left: 0;
+    }
+}
+
+.header {
+    height: 100vh;
+    /* background: url(../img/dit.jpg) no-repeat; */
+    /* background-size: cover; */
+    background-color: lightblue;
+    position: relative;
+    width: 100%;
+}

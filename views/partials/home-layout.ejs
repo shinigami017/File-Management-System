@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMS | File Management System</title>
+    <link rel="stylesheet" href="/stylesheets/home-layout.css">
+    <link rel="stylesheet" href="/stylesheets/dashboard-layout.css">
+    <link rel="stylesheet" href="/stylesheets/course-layout.css">
+    <link rel="stylesheet" href="/stylesheets/submission-layout.css">
+    <link rel="stylesheet" href="/stylesheets/profile-layout.css">
+    <link rel="stylesheet" href="/stylesheets/edit-profile-layout.css">
+    <link rel="stylesheet" href="/stylesheets/updates-layout.css">
+    <link rel="stylesheet" href="/stylesheets/flash-message.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script defer src="/scripts/script.js">
+    </script>
+
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <a href="#" class="logo-icon">
+            </a>
+            <h1 class="logo-title">FMS</h1>
+        </div>
+        <div class="nav-right">
+            <div class="user-dropdown">
+                <button><i class="fas fa-user-circle user-icon"></i><span class="dd-head"><%= typeof currentUser.firstname != 'undefined' ? currentUser.firstname : currentUser.name %></span><i id="dd-arrow" class="fas fa-caret-down"></i></button>
+                <ul class="dropdown-ul" hidden>
+                    <li><a href="/fms.edu.in/dashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="/fms.edu.in/users/profile"><i class="fas fa-user"></i>Profile</a></li>
+                    <li><a href="/fms.edu.in/updates"><i class="fas fa-envelope"></i>Updates</a></li>
+                    <li><a href="/fms.edu.in/users/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                </ul>
+            </div>
+            <button id="navBtn">
+                <div class="hamburger-menu">
+                    <div class="line line1"></div>
+                    <div class="line line2"></div>
+                    <div class="line line3"></div>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- <nav class="sidebar"> -->
+    <div class="sidebar">
+        <div class="menu-item menu-item-link" data-target="/fms.edu.in/dashboard">
+            <a><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+        </div>
+        <div class="menu-dropdown">
+            <div data-list="1" class="menu-dropdown-item"><i class="fas fa-graduation-cap"></i>Courses<i id="dd-arrow-1" class="fas fa-caret-down"></i></div>
+            <ul id="submenu-1" hidden>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+            </ul>
+        </div>
+        <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/profile">
+            <a><i class="fas fa-user"></i>Profile</a>
+        </div>
+        <div class="menu-item menu-item-link" data-target="/fms.edu.in/updates">
+            <a><i class="fas fa-envelope"></i>Updates</a>
+        </div>
+        <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/logout">
+            <a><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+        <!-- <div class="menu-item">
+            <button data-list="2" class="menu-dropdown-item">Menu 2<i id="dd-arrow-2" class="fas fa-caret-down"></i></button>
+            <ul id="submenu-2" hidden>
+                <li><a href="#right-content-3" class="menu-item-link">Right Content 3</a></li>
+                <li><a href="#right-content-4" class="menu-item-link">Right Content 4</a></li>
+            </ul>
+        </div>-->
+    </div>

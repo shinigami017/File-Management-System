@@ -11,7 +11,6 @@
     "dependencies": {
         "bcryptjs": "*",
         "body-parser": "*",
-        "cookie-parser": "*",
         "connect-flash": "*",
         "ejs": "*",
         "express": "*",

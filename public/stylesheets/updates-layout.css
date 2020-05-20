@@ -1,0 +1,43 @@
+.content-task {
+    margin-top: 50px;
+}
+
+.content-task .task-title {
+    font-size: 30px;
+    padding: 10px 40px;
+    background-color: rgb(255, 224, 179);
+}
+
+.task-options li {
+    border-bottom: 1px solid lightgray;
+    padding: 10px 60px;
+    background-color: blanchedalmond;
+    color: #031c27;
+}
+
+.task-options li i {
+    margin-right: 15px;
+}
+
+.task-options li a {
+    text-decoration: none;
+    color: #031c27;
+}
+
+.task-options li a:hover {
+    color: rgba(36, 63, 139, 0.925);
+}
+
+.task-link {
+    text-align: end;
+    padding: 10px 20px;
+}
+
+.task-link a {
+    text-decoration: none;
+    color: rgba(52, 52, 243, 0.945);
+}
+
+.task-link a:hover {
+    color: rgba(80, 80, 214, 0.664);
+}

@@ -1,0 +1,51 @@
+<%- include ("../partials/home-layout")%>
+    <section>
+        <header>
+            <h1 class="main-title">
+                Course $
+            </h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i>
+                <a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity">Activity</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity/submission">Submission</a></p>
+        </header>
+        <div class="container">
+            <div class="content">
+                <div class="sub-content">
+                    <p class="content-title">
+                        Task Title
+                    </p>
+                    <div class="content-body content-sub">
+                        <div class="content-ps">Problem Statement</div>
+                        <div class="note"><span>Instructions: </span>
+                            <ul>
+                                <li>File uploaded should be named according to file name convention mentioned in the problem statement.</li>
+                                <li>File uploaded should only be in <i>.doc</i> format.</li>
+                                <li>Upload one file at a time.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-content">
+                    <p class="content-title">File Submission</p>
+                    <div class="content-body">
+                        <%- include ("../partials/messages") %>
+                            <form method="POST" action="/fms.edu.in/course/activity/submission" enctype="multipart/form-data">
+                                <div class="form-field">
+                                    <input type="file" name="fileUpload" id="file-input" onchange="myFunction4()" hidden>
+                                    <button type="button" id="file-btn" onclick="myFunction3()">CHOOSE A FILE</button>
+                                    <span id="file-text">No file chosen, yet.</span>
+                                </div>
+
+                                <div class="sub-btn">
+                                    <input type="submit" class="btn-sc" value="Save Changes">
+                                    <div class="btn-cl"><a href="/fms.edu.in/course/activity">Cancel</a></div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <%- include ("../partials/footer")%>

@@ -1,0 +1,49 @@
+header .main-title {
+    max-width: 100%;
+    background-color: #103249;
+    background-color: #043608ec;
+    color: white;
+    font-size: 40px;
+    letter-spacing: 1px;
+    padding: 15px 0 15px 40px;
+}
+
+section .container {
+    width: 90%;
+    margin: 40px auto;
+}
+
+section .container h4 {
+    font-size: 25px;
+    letter-spacing: 1px;
+}
+
+.content .sub-content {
+    margin: 50px auto;
+}
+
+.sub-content .content-title {
+    font-size: 25px;
+}
+
+.sub-content .content-body {
+    margin: 25px auto;
+}
+
+.content-body .db-li i {
+    margin-right: 10px;
+}
+
+.content-body .db-li {
+    margin: 8px auto;
+    font-size: 18px;
+}
+
+.content-body .db-li a {
+    text-decoration: none;
+    color: rgba(29, 27, 27, 0.952);
+}
+
+.content-body .db-li a:hover {
+    color: rgba(52, 52, 243, 0.945);
+}

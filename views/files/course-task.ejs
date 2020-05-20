@@ -1,0 +1,62 @@
+<%- include ("../partials/home-layout")%>
+
+    <section>
+        <header>
+            <h1 class="main-title">Course $</h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity">Activity</a></p>
+        </header>
+        <div class="container">
+            <div class="content">
+                <div class="sub-content">
+                    <p class="content-title">Assignment / Lab Program / Report Submission</p>
+                    <div class="content-body">
+                        <div class="content-ps">Problem Statement</div>
+                        <p class="note"><span>Note: </span>Submission will be online and only in (.doc) format.</p>
+                    </div>
+                </div>
+
+                <div class="sub-content">
+                    <p class="content-title">Submission Status</p>
+                    <ul class="content-body sub-status">
+                        <li class="status-bar">
+                            <div class="status-tt">Submission Status</div>
+
+                            <% if(submitted){ %>
+
+                                <div class="status-tb">Submitted for grading</div>
+                                <%} else {%>
+
+                                    <div class="status-tb">No attempt</div>
+                                    <%}%>
+                        </li>
+                        <li class="status-bar">
+                            <div class="status-tt">Grading Status</div>
+                            <div class="status-tb">Not graded / Grades</div>
+                        </li>
+                        <li class="status-bar">
+                            <div class="status-tt">Due date</div>
+                            <div class="status-tb">DD : MM : YYYY (Date Format)</div>
+                        </li>
+                        <li class="status-bar status-rm">
+                            <div class="status-tt">Remarks</div>
+                            <div class="status-tb">No remarks / Remarks left by faculty</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="btn-box">
+                    <% if(submitted){ %>
+
+                        <a href="/fms.edu.in/course/activity/submission">Edit Submission</a>
+                        <%} else {%>
+
+                            <a href="/fms.edu.in/course/activity/submission">Add Submission</a>
+                            <%}%>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <%- include ("../partials/footer")%>

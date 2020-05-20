@@ -1,0 +1,79 @@
+.sub-btn {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-sc,
+.btn-cl a {
+    font-size: 20px;
+    color: white;
+    padding: 9px 15px;
+    border: 1.5px solid #fff;
+    border-radius: 25px;
+}
+
+.btn-sc {
+    margin-right: 5%;
+    background-color: rgb(29, 182, 34);
+}
+
+.btn-sc:hover {
+    border: 1.5px solid rgb(35, 201, 40);
+    background-color: rgb(35, 201, 40);
+}
+
+.btn-cl a {
+    letter-spacing: 1px;
+    background-color: rgb(253, 175, 29);
+}
+
+.btn-cl a:hover {
+    border: 1.5px solid orange;
+    background-color: orange;
+}
+
+.content-body .note span {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.content-body .note {
+    display: flex;
+}
+
+.content-body .note ul {
+    padding-left: 20px;
+}
+
+.content-body .note ul li {
+    list-style: disc;
+}
+
+#file-btn {
+    padding: 10px;
+    color: white;
+    background-color: #009578;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#file-btn:hover {
+    background-color: #00b28f;
+}
+
+#file-text {
+    margin-left: 10px;
+    font-family: sans-serif;
+    color: #aaa;
+}
+
+.form-field {
+    background-color: blanchedalmond;
+    padding: 5%;
+    text-align: center;
+}

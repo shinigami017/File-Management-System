@@ -1,0 +1,136 @@
+header .main-title {
+    max-width: 100%;
+    background-color: #103249;
+    color: white;
+    font-size: 40px;
+    letter-spacing: 1px;
+    padding: 15px 0 15px 40px;
+}
+
+header .path-track {
+    max-width: 100%;
+    background-color: #add1e9d3;
+    font-size: 20px;
+    padding: 15px 0 15px 40px;
+    color: rgb(38, 42, 53);
+}
+
+.path-track i {
+    margin: 0 10px;
+}
+
+.path-track a {
+    text-decoration: none;
+    color: rgb(38, 42, 53);
+}
+
+.path-track a:hover {
+    color: rgba(36, 63, 139, 0.925);
+}
+
+section .container {
+    width: 90%;
+    margin: 40px auto;
+}
+
+.content .sub-content {
+    margin: 50px auto;
+}
+
+.sub-content .content-title {
+    font-size: 30px;
+}
+
+.sub-content .content-body {
+    margin: 20px auto;
+}
+
+.content-ps {
+    max-width: 100%;
+    background-color: rgb(255, 224, 189);
+    border-radius: 8px;
+    font-size: 25px;
+    padding: 10px 0 10px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.t-link {
+    font-size: 16px;
+    padding-right: 20px;
+}
+
+.t-link a {
+    text-decoration: none;
+    color: rgba(52, 52, 243, 0.945);
+}
+
+.t-link a:hover {
+    color: rgba(80, 80, 214, 0.664);
+}
+
+.content-body .note {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.sub-status {
+    max-width: 100%;
+    background-color: rgb(255, 237, 217);
+    border-radius: 8px;
+}
+
+.sub-status .status-bar {
+    height: 80px;
+    display: flex;
+    font-size: 18px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.sub-status li .status-tt {
+    min-width: 200px;
+}
+
+.sub-status li .status-tb,
+.sub-status li .status-tt {
+    padding-left: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sub-status li .status-tt {
+    background-color: rgb(255, 224, 189);
+}
+
+.status-bar {
+    margin: 0;
+}
+
+.sub-status .status-rm {
+    height: 120px;
+    border-bottom: none;
+    overflow: auto;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-box a {
+    font-size: 20px;
+    color: white;
+    background-color: #4CAF50;
+    padding: 7px 10px;
+    border: 1.5px solid #fff;
+    border-radius: 25px;
+}
+
+.btn-box a:hover {
+    border: 1.5px solid #4CAF50;
+    background-color: #fff;
+    color: #4CAF50;
+}

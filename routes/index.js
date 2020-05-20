@@ -4,12 +4,7 @@ var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
 
 // Get Homepage
 router.get("/", forwardAuthenticated, function(request, response) {
-    response.render("index");
-});
-
-// User Dashboard
-router.get("/dashboard", isLoggedIn, function(request, response) {
-    response.render("dashboard", { user: request.user });
+    response.redirect("/fms.edu.in");
 });
 
 module.exports = router;

@@ -1,0 +1,160 @@
+header .main-title {
+    max-width: 100%;
+    background-color: #103249;
+    background-color: #043608ec;
+    color: white;
+    font-size: 40px;
+    letter-spacing: 1px;
+    padding: 15px 0 15px 40px;
+    display: flex;
+    align-items: center;
+}
+
+header .main-title i {
+    font-size: 80px;
+    margin-right: 30px;
+}
+
+header .path-track {
+    max-width: 100%;
+    background-color: #add1e9d3;
+    background-color: #7ada67d3;
+    font-size: 20px;
+    padding: 15px 0 15px 40px;
+    color: rgb(38, 42, 53);
+}
+
+.path-track i {
+    margin: 0 10px;
+}
+
+.path-track a {
+    text-decoration: none;
+    color: rgb(38, 42, 53);
+}
+
+.path-track a:hover {
+    color: rgba(36, 63, 139, 0.925);
+}
+
+section .container {
+    width: 90%;
+    margin: 40px auto;
+}
+
+.container .pr-content {
+    display: flex;
+}
+
+.content .sub-content {
+    margin: 50px 0;
+}
+
+.cd-content,
+.ud-content {
+    flex: 40%;
+    max-width: 45%;
+    border: 1px solid gray;
+    padding: 5% 4%;
+}
+
+.no-content {
+    flex: 20%;
+    max-width: 10%;
+}
+
+.sub-content .content-title {
+    font-size: 30px;
+}
+
+.sub-content .content-body {
+    margin: 25px auto;
+}
+
+.ud-content li {
+    margin-bottom: 5%;
+    font-size: 17px;
+}
+
+.ud-title {
+    font-weight: 600;
+}
+
+.ud-value {
+    margin-top: 5px;
+}
+
+.sub-content .btn-wrapper {
+    margin-top: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btn-cp {
+    margin-right: 5%;
+}
+
+.btn-cp a,
+.btn-ep a {
+    text-decoration: none;
+    font-size: 20px;
+    border: 1.75px solid orange;
+    padding: 8px 15px;
+    border-radius: 25px;
+}
+
+.btn-ep a {
+    color: #fff;
+    background-color: orange;
+}
+
+.btn-ep a:hover {
+    background-color: rgb(255, 136, 1);
+    border-color: rgb(255, 136, 1);
+}
+
+
+/* for change password buttons where btn-ep is input type="submit" */
+
+.btn-ep {
+    text-decoration: none;
+    font-size: 20px;
+    border: 1.75px solid orange;
+    padding: 8px 15px;
+    border-radius: 25px;
+    color: #fff;
+    background-color: orange;
+}
+
+.btn-ep:hover {
+    background-color: rgb(255, 136, 1);
+    border-color: rgb(255, 136, 1);
+    cursor: pointer;
+}
+
+.btn-cp a {
+    color: rgb(255, 136, 1);
+    border-color: rgb(255, 136, 1);
+}
+
+.btn-cp a:hover {
+    color: #fff;
+    border-color: orange;
+    background-color: orange;
+}
+
+@media (max-width: 850px) {
+    .container .pr-content {
+        display: block;
+    }
+    .ud-content,
+    .cd-content {
+        max-width: 100%;
+    }
+}
+
+.pts-dboard li {
+    margin: 20px auto;
+    font-size: 18px;
+}

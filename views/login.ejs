@@ -3,7 +3,7 @@
     <div class="text-center">
         <h2 class="page-header">Account Login</h2>
         <%- include ("partials/messages") %>
-            <form class="form-signin" action="/users/login" method="POST">
+            <form class="form-signin" action="/fms.edu.in/users/login" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Enter username" id="username" required autofocus>
                 </div>
@@ -13,8 +13,8 @@
                 <button type="submit" class="btn btn-lg btn-primary">Login</button>
             </form>
             <p class="lead mt-4">
-                No Account? <a href="/users/register">Register</a>
+                No Account? <a href="/fms.edu.in/users/register">Register</a>
             </p>
     </div>
 
-    <%- include ("partials/bottom") %>
+    <%- include ("partials/footer") %>
