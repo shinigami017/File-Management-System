@@ -32,8 +32,10 @@
                 <ul class="dropdown-ul" hidden>
                     <li><a href="/fms.edu.in/dashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
                     <li><a href="/fms.edu.in/users/profile"><i class="fas fa-user"></i>Profile</a></li>
-                    <li><a href="/fms.edu.in/updates"><i class="fas fa-envelope"></i>Updates</a></li>
-                    <li><a href="/fms.edu.in/users/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                    <% if(currentUser.role === "student"){ %>
+                        <li><a href="/fms.edu.in/updates"><i class="fas fa-envelope"></i>Updates</a></li>
+                        <% } %>
+                            <li><a href="/fms.edu.in/users/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                 </ul>
             </div>
             <button id="navBtn">
@@ -48,9 +50,11 @@
 
     <!-- <nav class="sidebar"> -->
     <div class="sidebar">
+
         <div class="menu-item menu-item-link" data-target="/fms.edu.in/dashboard">
             <a><i class="fas fa-tachometer-alt"></i>Dashboard</a>
         </div>
+
         <div class="menu-dropdown">
             <div data-list="1" class="menu-dropdown-item"><i class="fas fa-graduation-cap"></i>Courses<i id="dd-arrow-1" class="fas fa-caret-down"></i></div>
             <ul id="submenu-1" hidden>
@@ -62,16 +66,36 @@
                 <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
             </ul>
         </div>
-        <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/profile">
-            <a><i class="fas fa-user"></i>Profile</a>
-        </div>
-        <div class="menu-item menu-item-link" data-target="/fms.edu.in/updates">
-            <a><i class="fas fa-envelope"></i>Updates</a>
-        </div>
-        <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/logout">
-            <a><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </div>
-        <!-- <div class="menu-item">
+
+        <% if(currentUser.role === "faculty"){ %>
+            <div class="menu-dropdown">
+                <div data-list="2" class="menu-dropdown-item"><i class="fas fa-graduation-cap"></i>Classes<i id="dd-arrow-1" class="fas fa-caret-down"></i></div>
+                <ul id="submenu-2" hidden>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                    <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
+                </ul>
+            </div>
+            <% } %>
+
+                <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/profile">
+                    <a><i class="fas fa-user"></i>Profile</a>
+                </div>
+
+                <% if(currentUser.role === "student"){ %>
+                    <div class="menu-item menu-item-link" data-target="/fms.edu.in/updates">
+                        <a><i class="fas fa-envelope"></i>Updates</a>
+                    </div>
+                    <% } %>
+
+                        <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/logout">
+                            <a><i class="fas fa-sign-out-alt"></i>Logout</a>
+                        </div>
+
+                        <!-- <div class="menu-item">
             <button data-list="2" class="menu-dropdown-item">Menu 2<i id="dd-arrow-2" class="fas fa-caret-down"></i></button>
             <ul id="submenu-2" hidden>
                 <li><a href="#right-content-3" class="menu-item-link">Right Content 3</a></li>

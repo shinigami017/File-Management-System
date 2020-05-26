@@ -1,0 +1,51 @@
+<%- include ("../../partials/home-layout")%>
+
+    <section>
+        <header>
+            <h1 class="main-title">
+                Course $
+            </h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i>
+                <a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i>Task Title<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/task/all-submissions">Submissions</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/task/submission">Submission</a></p>
+        </header>
+        <div class="container">
+            <div class="content">
+
+                <div class="sub-content">
+                    <p class="content-title">Task Title</p>
+                    <%- include ("../../partials/messages") %>
+                        <form method="POST" action="/fms.edu.in/course/task/submission" class="content-body">
+                            <div class="form-element">
+                                <p class="form-title">Student Name : </p>
+                                <p class="form-value">Student Name</p>
+                            </div>
+
+                            <div class="form-element">
+                                <p class="form-title">Student Roll : </p>
+                                <p class="form-value">**********</p>
+                            </div>
+
+                            <div class="form-element">
+                                <p class="form-title">Submission : </p>
+                                <p class="form-value">Solution.pdf</p>
+                            </div>
+                            <div class="form-element">
+                                <label class="form-title" for="submission-remark">Remarks : </label>
+                                <textarea name="submission-remark" id="submission-remark"></textarea>
+                            </div>
+                            <div class="form-element">
+                                <label class="form-title" for="submission-grades">Grades : </label>
+                                <input type="text" name="submission-grades" id="submission-grades">
+                            </div>
+                            <div class="form-element form-submit-btn">
+                                <input type="submit" value="Submit">
+                            </div>
+                        </form>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <%- include ("../../partials/footer")%>

@@ -1,4 +1,4 @@
-<%- include ("../partials/home-layout")%>
+<%- include ("../../partials/home-layout")%>
     <section>
         <header>
             <h1 class="main-title">
@@ -28,7 +28,7 @@
                 <div class="sub-content">
                     <p class="content-title">File Submission</p>
                     <div class="content-body">
-                        <%- include ("../partials/messages") %>
+                        <%- include ("../../partials/messages") %>
                             <form method="POST" action="/fms.edu.in/course/activity/submission" enctype="multipart/form-data">
                                 <div class="form-field">
                                     <input type="file" name="fileUpload" id="file-input" onchange="myFunction4()" hidden>
@@ -48,4 +48,4 @@
         </div>
 
     </section>
-    <%- include ("../partials/footer")%>
+    <%- include ("../../partials/footer")%>

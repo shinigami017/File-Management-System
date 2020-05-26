@@ -1,0 +1,78 @@
+<%- include ("../../partials/home-layout")%>
+
+    <section>
+        <header>
+            <h1 class="main-title">Course $</h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course">Course $</a></p>
+        </header>
+        <div class="container">
+            <div class="content">
+                <div class="sub-content">
+                    <p class="content-title">Add Task</p>
+                    <%- include ("../../partials/messages") %>
+
+                        <form method="POST" action="/fms.edu.in/course/add-task" class="content-body" enctype="multipart/form-data">
+                            <div class="form-element">
+                                <label for="task-type" class="form-title">Task title : </label>
+                                <input type="text" id="task-type" name="task-type">
+                            </div>
+                            <div class="form-element">
+                                <label for="file-input" class="form-title">Problem Statement : </label>
+                                <input type="file" name="fileUpload" id="file-input" onchange="myFunction4()" hidden>
+                                <button type="button" id="file-btn" onclick="myFunction3()">CHOOSE A FILE</button>
+                                <span id="file-text">No file chosen, yet.</span>
+                            </div>
+                            <div class="form-element">
+                                <p class="form-title">Assign to : </p>
+                                <div class="class-rb-btn"><input type="radio" id="rb-1" name="class-group-1" value="class-group-1">
+                                    <label for="rb-1">Class 1</label>
+                                    <input class="class-rb" type="radio" id="rb-2" name="class-group-2" value="class-group-2">
+                                    <label for="rb-2">Class 2</label>
+                                    <input class="class-rb" type="radio" id="rb-3" name="class-group-3" value="class-group-3">
+                                    <label for="rb-3">Class 3</label>
+                                    <input class="class-rb" type="radio" id="rb-4" name="class-group-4" value="class-group-4">
+                                    <label for="rb-4">Class 4</label><br>
+                                    <input class="class-rb" type="radio" id="rb-5" name="class-group-5" value="class-group-5">
+                                    <label for="rb-5">Class 5</label>
+                                    <input class="class-rb" type="radio" id="rb-6" name="class-group-6" value="class-group-6">
+                                    <label for="rb-6">Class 6</label>
+
+                                    <!--  issue : deselect radio button on doble click*************************************** -->
+
+                                </div>
+                            </div>
+                            <div class="form-element form-submit-btn">
+                                <input type="submit" value="Submit">
+                            </div>
+                        </form>
+                </div>
+                <div class="sub-content">
+                    <p class="content-title">History</p>
+                    <div class="content-body">
+                        <div class="content-ps">
+                            <div class="t-title">Task Title</div>
+                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
+                        </div>
+                        <div class="content-ps">
+                            <div class="t-title">Task Title</div>
+                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
+                        </div>
+                        <div class="content-ps">
+                            <div class="t-title">Task Title</div>
+                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
+                        </div>
+                        <div class="content-ps">
+                            <div class="t-title">Task Title</div>
+                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </section>
+
+    <%- include ("../../partials/footer")%>

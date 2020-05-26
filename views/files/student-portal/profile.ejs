@@ -1,0 +1,84 @@
+<%- include ("../../partials/home-layout")%>
+
+    <section>
+        <header>
+            <h1 class="main-title"><i class="fas fa-user-circle"></i>
+                <%=currentUser.firstname+" "+currentUser.lastname%>
+            </h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/users/profile">Profile</a></p>
+        </header>
+        <div class="container">
+            <div class="content pr-content">
+
+                <div class="sub-content ud-content">
+                    <p class="content-title">User Details</p>
+                    <ul class="content-body">
+                        <li>
+                            <div class="ud-title">Email Address</div>
+                            <div class="ud-value">
+                                <%=currentUser.email%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Phone Number</div>
+                            <div class="ud-value">
+                                <%=currentUser.phone%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Gender</div>
+                            <div class="ud-value">
+                                <%=typeof currentUser.gender != 'undefined' ? currentUser.gender : '-'%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Year</div>
+                            <div class="ud-value">
+                                <%=typeof currentUser.year != 'undefined' ? currentUser.year : '-'%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Program Type</div>
+                            <div class="ud-value">
+                                <%=typeof currentUser.program != 'undefined' ? currentUser.program : '-'%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Branch</div>
+                            <div class="ud-value">
+                                <%=typeof currentUser.branch != 'undefined' ? currentUser.branch : '-'%>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ud-title">Section</div>
+                            <div class="ud-value">
+                                <%=typeof currentUser.section != 'undefined' ? currentUser.section : '-'%>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="btn-wrapper">
+                        <div class="btn-cp"><a href="/fms.edu.in/users/changepassword">Change Password</a></div>
+                        <div class="btn-ep"><a href="/fms.edu.in/users/editprofile">Edit Profile</a></div>
+                    </div>
+                </div>
+
+                <!-- <div class="sub-content no-content"></div> -->
+
+                <div class="sub-content cd-content">
+                    <p class="content-title tt-dboard">Courses</p>
+                    <ul class="content-body pts-dboard">
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>Course $ - Title</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <%- include ("../../partials/footer")%>

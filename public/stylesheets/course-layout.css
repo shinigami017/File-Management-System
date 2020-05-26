@@ -1,6 +1,7 @@
 header .main-title {
     max-width: 100%;
     background-color: #103249;
+    background-color: #043608ec;
     color: white;
     font-size: 40px;
     letter-spacing: 1px;
@@ -10,6 +11,7 @@ header .main-title {
 header .path-track {
     max-width: 100%;
     background-color: #add1e9d3;
+    background-color: #7ada67d3;
     font-size: 20px;
     padding: 15px 0 15px 40px;
     color: rgb(38, 42, 53);
@@ -133,4 +135,63 @@ section .container {
     border: 1.5px solid #4CAF50;
     background-color: #fff;
     color: #4CAF50;
+}
+
+form.content-body {
+    padding: 15px;
+    background-color: rgb(255, 237, 217);
+}
+
+.content-body .form-element {
+    display: flex;
+    padding: 10px;
+    align-items: baseline;
+}
+
+.form-element .form-title {
+    min-width: 175px;
+    font-size: 20px;
+}
+
+.form-element input,
+.form-element textarea {
+    outline: none;
+    font-size: 16px;
+    padding: 2px 5px;
+}
+
+.form-element input[type="text"],
+.form-element textarea {
+    width: 200px;
+}
+
+.class-rb-btn input,
+.class-rb-btn label {
+    margin: 5px;
+    font-size: 18px;
+}
+
+.content-body .form-submit-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.form-submit-btn input {
+    font-size: 22px;
+    background-color: lime;
+    background-color: rgb(29, 182, 34);
+    outline: none;
+    border: 1.5px solid rgb(255, 224, 189);
+    padding: 10px 15px;
+    color: white;
+    border-radius: 25px;
+}
+
+.form-submit-btn input:hover {
+    border-color: rgb(35, 201, 40);
+    background-color: rgb(35, 201, 40);
+}
+
+#file-text {
+    align-self: center;
 }

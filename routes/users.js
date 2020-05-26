@@ -123,7 +123,7 @@ router.get("/profile", isLoggedIn, function(request, response) {
         if (error) {
             response.json(error);
         } else {
-            response.render("files/profile", { currentUser: foundUser });
+            response.render((request.user.role == "student") ? "files/student-portal/profile" : "files/faculty-portal/profile", { currentUser: foundUser });
         }
     });
 });
@@ -143,7 +143,7 @@ router.get("/editprofile", isLoggedIn, function(request, response) {
         if (error) {
             response.json(error);
         } else {
-            response.render("files/edit-profile", { currentUser: foundUser });
+            response.render("files/student-portal/edit-profile", { currentUser: foundUser });
         }
     });
 });
@@ -172,7 +172,7 @@ router.get("/changepassword", isLoggedIn, function(request, response) {
         if (error) {
             response.json(error);
         } else {
-            response.render("files/change-password", { currentUser: foundUser });
+            response.render("files/student-portal/change-password", { currentUser: foundUser });
         }
     });
 });

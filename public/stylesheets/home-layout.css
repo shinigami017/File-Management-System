@@ -179,10 +179,10 @@ nav .logo {
     height: 80px;
     width: 90px;
     align-self: center;
-    background: url(../img/dit-logo-tr-b.jpg) no-repeat;
-    background: url(../img/pc-logo.png) no-repeat;
-    background-size: contain;
-    background-position: center;
+    /* background: url(../img/dit-logo-tr-b.jpg) no-repeat; */
+    /* background: url(../img/pc-logo.png) no-repeat; */
+    /* background-size: contain; */
+    /* background-position: center; */
 }
 
 .logo .logo-title {

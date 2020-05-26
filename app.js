@@ -62,5 +62,6 @@ app.use("/fms.edu.in/users", userRoute);
 app.set("port", (process.env.PORT || 3000));
 app.listen(app.get("port"), function() {
     console.log("Server started on port " + app.get("port") + "!");
+    console.log("Browse the url http://localhost:" + app.get("port") + "/");
     console.log("Press Ctrl + C to stop the server.");
 });
