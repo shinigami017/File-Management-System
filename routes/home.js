@@ -1,7 +1,6 @@
 var express = require("express"),
-    router = express.Router();
-// multer = require("multer"),
-// upload = multer({ dest: "../data/uploads/" });
+    router = express.Router(),
+    multer = require("multer");
 
 
 var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
@@ -11,17 +10,28 @@ var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
 //     Course = require("../models/course"),
 //     Student = require("../models/student");
 
+// Set Storage engine
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'data/files');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
 
-// Set storage engine
-// const storage = multer.diskStorage({
-//     destination: '../data/uploads',
-//     filename: (req, res, cb) => {
-//         cb(null, file.originalname);
-//     }
-// });
-
-// Init upload
-// const upload = multer({ storage }).single("fileUpload"); //to upload single file and that file input has name field as fileUpload
+//Init upload
+var upload = multer({
+    storage: storage,
+    limits: { files: 1 },
+    fileFilter: function(req, file, cb) {
+        if (file.mimetype !== "application/pdf") {
+            req.fileValidationError = "Only pdf files allowed.";
+            return cb(null, false, new Error("Only pdf files allowed."));
+        }
+        cb(null, true);
+    }
+});
 
 
 // Get landing page
@@ -55,7 +65,16 @@ router.get("/course/activity/submission", isLoggedIn, function(request, response
     response.render("files/student-portal/submission");
 });
 
-router.post("/course/activity/submission", function(request, response) {
+router.post("/course/activity/submission", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
+    // uploading submission file to local data base
+    const file = request.file;
+    if (!file) {
+        // this will print error message on web page
+        const error = (request.fileValidationError) ? (request.fileValidationError) : (new Error("Please upload a file"));
+        error.httpStatusCode = 400;
+        return next(error);
+    }
+    console.log(file.path);
     response.redirect("/fms.edu.in/course/activity");
 });
 
@@ -69,7 +88,16 @@ router.get("/updates", isLoggedIn, function(request, response) {
 // Faculty Routes
 
 // Add/update task by faculty for any course
-router.post("/course/add-task", isLoggedIn, function(request, response) {
+router.post("/course/add-task", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
+    // uploading task file to local database
+    const file = request.file;
+    if (!file) {
+        // this will print error message on web page
+        const error = (request.fileValidationError) ? (request.fileValidationError) : (new Error("Please upload a file"));
+        error.httpStatusCode = 400;
+        return next(error);
+    }
+    console.log(file.path);
     response.redirect("/fms.edu.in/course");
 });
 
