@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/data", express.static(path.join(__dirname, "data")));
 
 // Express Session Middleware
 app.use(session({

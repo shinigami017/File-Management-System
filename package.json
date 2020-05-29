@@ -16,6 +16,7 @@
         "express": "*",
         "express-messages": "*",
         "express-session": "*",
+        "file-system": "^2.2.2",
         "mongoose": "*",
         "multer": "^1.4.2",
         "passport": "*",

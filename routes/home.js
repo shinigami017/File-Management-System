@@ -1,14 +1,14 @@
 var express = require("express"),
     router = express.Router(),
+    path = require("path"),
     multer = require("multer");
 
 
 var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
 
-// var Task = require("../models/task"),
-//     Submission = require("../models/submission"),
-//     Course = require("../models/course"),
-//     Student = require("../models/student");
+var User = require("../models/user");
+var Submission = require("../models/submission");
+
 
 // Set Storage engine
 var storage = multer.diskStorage({
@@ -74,8 +74,35 @@ router.post("/course/activity/submission", isLoggedIn, upload.single("fileUpload
         error.httpStatusCode = 400;
         return next(error);
     }
-    console.log(file.path);
-    response.redirect("/fms.edu.in/course/activity");
+    let filename = file.filename,
+        filepath = file.destination,
+        user = {
+            id: request.user._id,
+            username: request.user.username,
+            role: request.user.role
+        };
+    var newSubmission = new Submission({ filename: filename, filepath: filepath, user: user });
+    newSubmission.save(function(error, submission) {
+        if (error) {
+            response.redirect("/fms.edu.in/course/activity");
+            return console.log(error);
+        }
+        User.findById(request.user._id).populate("submissions").exec(function(error, foundUser) {
+            if (error) {
+                response.redirect("/fms.edu.in/course/activity");
+                return console.log(error);
+            }
+            foundUser.submissions.push(submission);
+            foundUser.save(function(error, updatedUser) {
+                if (error) {
+                    response.redirect("/fms.edu.in/course/activity");
+                    return console.log(error);
+                }
+                response.render("test", { submission: submission });
+            });
+        });
+    });
+    // response.redirect("/fms.edu.in/course/activity");
 });
 
 // Get updates page with all recent tasks
@@ -97,8 +124,35 @@ router.post("/course/add-task", isLoggedIn, upload.single("fileUploaded"), funct
         error.httpStatusCode = 400;
         return next(error);
     }
-    console.log(file.path);
-    response.redirect("/fms.edu.in/course");
+    let filename = file.filename,
+        filepath = file.destination,
+        user = {
+            id: request.user._id,
+            username: request.user.username,
+            role: request.user.role
+        };
+    var newSubmission = new Submission({ filename: filename, filepath: filepath, user: user });
+    newSubmission.save(function(error, submission) {
+        if (error) {
+            response.redirect("/fms.edu.in/course");
+            return console.log(error);
+        }
+        User.findById(request.user._id).populate("submissions").exec(function(error, foundUser) {
+            if (error) {
+                response.redirect("/fms.edu.in/course");
+                return console.log(error);
+            }
+            foundUser.submissions.push(submission);
+            foundUser.save(function(error, updatedUser) {
+                if (error) {
+                    response.redirect("/fms.edu.in/course");
+                    return console.log(error);
+                }
+                response.render("test", { submission: submission });
+            });
+        });
+    });
+    // response.redirect("/fms.edu.in/course");
 });
 
 // Get all submissions on a particular task of a course

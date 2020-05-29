@@ -1,0 +1,7 @@
+<p>Submission :
+    <a download="<%=submission.filename%>" href="/<%=submission.filepath%>/<%=submission.filename%>" target="_blank">
+        <%=submission.filename%>
+    </a> by
+    <%= submission.user.username %>(
+        <%=submission.user.role %>)
+</p>
