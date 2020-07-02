@@ -20,6 +20,18 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    gender: {
+        type: String,
+        required: false
+    },
+    year: {
+        type: Number,
+        required: false
+    },
+    program: {
+        type: String,
+        required: false
+    },
     role: {
         type: String,
         required: true

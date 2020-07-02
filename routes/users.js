@@ -2,8 +2,12 @@ const express = require("express"),
     router = express.Router(),
     bcrypt = require("bcryptjs"),
     passport = require("passport");
-// Load User Model
+
+// Load models
 const User = require("../models/user");
+const Student = require("../models/student");
+const Faculty = require("../models/faculty");
+
 const { isLoggedIn, forwardAuthenticated } = require('../config/auth');
 
 // Register Form
@@ -68,31 +72,31 @@ router.post("/register", function(request, response) {
                 errors.push({ msg: "Username already registered" });
                 response.render("files/register", { errors, username, firstname, lastname, email, phone, role, password, password2 });
             } else {
-                let name = firstname + " " + lastname;
-                let newRole;
-                // if (role == "faculty") {
-                //     newRole = new Faculty({ username: username, name: name, email: email, phone: phone, password: password });
-                // }
-                // if (role == "student") {
-                //     newRole = new Student({ username: username, name: name, email: email, phone: phone, password: password });
-                // }
                 let newUser = new User({ username, firstname, lastname, email, phone, role, password });
                 bcrypt.genSalt(10, function(error, salt) {
                     bcrypt.hash(newUser.password, salt, function(error, hash) {
-                        if (error) throw error;
+                        if (error) {
+                            console.log(error);
+                            request.flash("error_msg", "Something went wrong. Please try again");
+                            return response.redirect("/fms.edu.in/users/register");
+                        }
                         newUser.password = hash;
-                        // newRole.password = hash;
-                        newUser.save(function(error, user) {
+                        newUser.save(function(error, savedUser) {
                             if (error) {
-                                return console.log(error);
+                                console.log(error);
+                                request.flash("error_msg", "Something went wrong. Please try again");
+                                return response.redirect("/fms.edu.in/users/register");
                             }
-                            // newRole.save(function(error, role) {
-                            //     if (error) {
-                            //         return console.log(error);
-                            //     }
-                            request.flash("success_msg", "You're successfully registered. Log in to continue");
-                            response.redirect("/fms.edu.in/users/login");
-                            // });
+                            let newRole = (savedUser.role === "student") ? (new Student({ userId: savedUser._id })) : (new Faculty({ userId: savedUser._id }));
+                            newRole.save(function(error, savedRole) {
+                                if (error) {
+                                    console.log(error);
+                                    request.flash("error_msg", "Something went wrong. Please try again");
+                                    return response.redirect("/fms.edu.in/users/register");
+                                }
+                                request.flash("success_msg", "You're successfully registered. Log in to continue");
+                                response.redirect("/fms.edu.in/users/login");
+                            });
                         });
                     });
                 });
@@ -110,24 +114,10 @@ router.post("/login", passport.authenticate("local", {
     response.redirect("/fms.edu.in");
 });
 
+
 // Get the user's profile page
 router.get("/profile", isLoggedIn, function(request, response) {
-    // Check for the role of user
-    // get student and courses from student's sem from database and send it to profile
-    // Student.findOne({ username: request.user.username }, function(error, foundStudent) {
-    //     if (error) {
-    //         response.json(error);
-    //     } else {
-    //         response.render("files/profile", { currentUser: foundStudent });
-    //     }
-    // });
-    User.findOne({ username: request.user.username }, function(error, foundUser) {
-        if (error) {
-            response.json(error);
-        } else {
-            response.render((request.user.role == "student") ? "files/student-portal/profile" : "files/faculty-portal/profile", { currentUser: foundUser });
-        }
-    });
+    response.render("files/student-portal/profile", { currentUser: request.user })
 });
 
 // Get the user's edit profile page

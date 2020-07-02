@@ -23,6 +23,10 @@ var submissionSchema = new mongoose.Schema({
             required: true
         }
     },
+    course: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Course"
+    },
     date: {
         type: Date,
         default: Date.now
