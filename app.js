@@ -10,7 +10,7 @@ var express = require("express"),
 var app = express();
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost/FileManagementSystem", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://fms_user:fms_password@shinigami017-azees.mongodb.net/FileManagementSystem?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 // EJS and View Engine
 app.set("views", path.join(__dirname, "views"));
