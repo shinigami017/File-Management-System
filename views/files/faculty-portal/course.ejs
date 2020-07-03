@@ -2,8 +2,12 @@
 
     <section>
         <header>
-            <h1 class="main-title">Course $</h1>
-            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course">Course $</a></p>
+            <!-- <h1 class="main-title">Course $</h1> -->
+            <h1 class="main-title">(
+                <%=course.code%>)
+                    <%=course.name%>
+            </h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/<%=course._id%>">(<%=course.code%>) <%=course.name%></a></p>
         </header>
         <div class="container">
             <div class="content">

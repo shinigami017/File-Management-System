@@ -6,9 +6,12 @@ var express = require("express"),
 
 var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
 
+// Load models
 var User = require("../models/user");
 var Submission = require("../models/submission");
+const Course = require("../models/course");
 
+let currentUser = null;
 
 // Set Storage engine
 var storage = multer.diskStorage({
@@ -41,28 +44,42 @@ router.get("/", forwardAuthenticated, function(request, response) {
 
 // Get dashboard
 router.get("/dashboard", isLoggedIn, function(request, response) {
-    //get all courses and faculties from database and send it to dashboard
-    response.render((request.user.role == "student") ? "files/student-portal/dashboard" : "files/faculty-portal/dashboard");
-
+    // get all the courses of current user and send it with the user's data
+    User.findById(request.user._id).populate("courses").exec(function(error, foundUser) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/users/login");
+        }
+        currentUser = foundUser;
+        response.render("files/dashboard", { currentUser: currentUser });
+    });
 });
 
 // Get particular course page
-router.get("/course", isLoggedIn, function(request, response) {
+router.get("/course/:id", isLoggedIn, function(request, response) {
     // find course and send it to the course page which will show all tasks that the course contains 
-    response.render((request.user.role == "student") ? "files/student-portal/course" : "files/faculty-portal/course");
+    Course.findById(request.params.id, function(error, foundCourse) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/dashboard");
+        }
+        return response.render(((request.user.role == "student") ? "files/student-portal/course" : "files/faculty-portal/course"), { currentUser: currentUser, course: foundCourse });
+    });
 });
 
 // Student Routes
 
 // Get particular task page for course cid
 router.get("/course/activity", isLoggedIn, function(request, response) {
-    response.render("files/student-portal/course-task", { submitted: false });
+    response.render("files/student-portal/course-task", { submitted: false, currentUser: currentUser });
 });
 
 // Get submission page for task (tid) of course (cid)
 router.get("/course/activity/submission", isLoggedIn, function(request, response) {
     // Find task and course in database and send it to  submission page
-    response.render("files/student-portal/submission");
+    response.render("files/student-portal/submission", { currentUser: currentUser });
 });
 
 router.post("/course/activity/submission", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
@@ -109,7 +126,7 @@ router.post("/course/activity/submission", isLoggedIn, upload.single("fileUpload
 router.get("/updates", isLoggedIn, function(request, response) {
     // Search in tasks db for the newly created tasks 
     // and tasks with pending due date
-    response.render("files/student-portal/updates");
+    response.render("files/student-portal/updates", { currentUser: currentUser });
 });
 
 // Faculty Routes
@@ -157,12 +174,12 @@ router.post("/course/add-task", isLoggedIn, upload.single("fileUploaded"), funct
 
 // Get all submissions on a particular task of a course
 router.get("/course/task/all-submissions", isLoggedIn, function(request, response) {
-    response.render("files/faculty-portal/submissions");
+    response.render("files/faculty-portal/submissions", { currentUser: currentUser });
 });
 
 // Get a particular submission on a particular task of a course
 router.get("/course/task/submission", isLoggedIn, function(request, response) {
-    response.render("files/faculty-portal/submission");
+    response.render("files/faculty-portal/submission", { currentUser: currentUser });
 });
 
 router.post("/course/task/submission", isLoggedIn, function(request, response) {

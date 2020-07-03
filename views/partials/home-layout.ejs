@@ -58,17 +58,15 @@
         <div class="menu-dropdown">
             <div data-list="1" class="menu-dropdown-item"><i class="fas fa-graduation-cap"></i>Courses<i id="dd-arrow-1" class="fas fa-caret-down"></i></div>
             <ul id="submenu-1" hidden>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
-                <li class="menu-item-link" data-target="/fms.edu.in/course"><a><i class="fas fa-graduation-cap"></i>Course $ - Title</a></li>
+                <%currentUser.courses.forEach(course => {%>
+                    <li class="menu-item-link" data-target="/fms.edu.in/course/<%=course._id%>"><a><i class="fas fa-graduation-cap"></i>(<%=course.code%>) <%=course.name%></a></li>
+                    <%});
+                %>
             </ul>
         </div>
 
-        <% if(currentUser.role === "faculty"){ %>
-            <div class="menu-dropdown">
+        <%// if(currentUser.role === "faculty"){ %>
+            <!-- <div class="menu-dropdown">
                 <div data-list="2" class="menu-dropdown-item"><i class="fas fa-graduation-cap"></i>Classes<i id="dd-arrow-1" class="fas fa-caret-down"></i></div>
                 <ul id="submenu-2" hidden>
                     <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
@@ -78,8 +76,8 @@
                     <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
                     <li class="menu-item-link" data-target="/fms.edu.in/class"><a><i class="fas fa-graduation-cap"></i>Class Group $</a></li>
                 </ul>
-            </div>
-            <% } %>
+            </div> -->
+            <%// } %>
 
                 <div class="menu-item menu-item-link" data-target="/fms.edu.in/users/profile">
                     <a><i class="fas fa-user"></i>Profile</a>
