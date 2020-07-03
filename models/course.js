@@ -7,16 +7,21 @@ const courseSchema = new mongoose.Schema({
     },
     code: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     sections: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Section"
     }],
-    faculty: {
+    faculties: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty"
-    },
+    }],
+    students: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student"
+    }],
     submissions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Submission"

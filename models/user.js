@@ -40,6 +40,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    courses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
+    }],
     submissions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Submission"

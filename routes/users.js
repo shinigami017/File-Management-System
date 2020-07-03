@@ -7,6 +7,9 @@ const express = require("express"),
 const User = require("../models/user");
 const Student = require("../models/student");
 const Faculty = require("../models/faculty");
+const Course = require("../models/course");
+
+let currentUser = null;
 
 const { isLoggedIn, forwardAuthenticated } = require('../config/auth');
 
@@ -117,7 +120,16 @@ router.post("/login", passport.authenticate("local", {
 
 // Get the user's profile page
 router.get("/profile", isLoggedIn, function(request, response) {
-    response.render("files/student-portal/profile", { currentUser: request.user })
+    // get all the courses of current user and send it with the user's data
+    User.findById(request.user._id).populate("courses").exec(function(error, foundUser) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/users/login");
+        }
+        currentUser = foundUser;
+        response.render("files/student-portal/profile", { currentUser: currentUser });
+    });
 });
 
 // Get the user's edit profile page
@@ -131,13 +143,7 @@ router.get("/editprofile", isLoggedIn, function(request, response) {
     //         response.render("files/edit-profile", { currentUser: foundStudent });
     //     }
     // });
-    User.findOne({ username: request.user.username }, function(error, foundUser) {
-        if (error) {
-            response.json(error);
-        } else {
-            response.render("files/student-portal/edit-profile", { currentUser: foundUser });
-        }
-    });
+    response.render("files/student-portal/edit-profile", { currentUser: currentUser });
 });
 
 // Post method to process the profile update
@@ -152,7 +158,7 @@ router.post("/editprofile", isLoggedIn, function(request, response) {
 
 // Get the user's change password page
 router.get("/changepassword", isLoggedIn, function(request, response) {
-    response.render("files/change-password", { currentUser: request.user });
+    response.render("files/change-password", { currentUser: currentUser });
 });
 
 // Post method to process the password change
@@ -234,6 +240,51 @@ router.get("/logout", function(request, response) {
     request.logout();
     request.flash("success_msg", "You're successfully logged out");
     response.redirect("/fms.edu.in/users/login");
+});
+
+router.post("/add-course", isLoggedIn, function(request, response) {
+    const code = request.body.code;
+    Course.findOne({ code: code }, function(error, foundCourse) {
+        if (error) {
+            console.log(error);
+            return response.json(error);
+        }
+        if (request.user.role === "students") {
+            if (typeof foundCourse.students === "undefined") {
+                foundCourse.students = [];
+                foundCourse.students.push(request.user._id);
+            } else {
+                foundCourse.students.push(request.user._id);
+            }
+        } else {
+            if (typeof foundCourse.faculties === "undefined") {
+                foundCourse.faculties = [];
+                foundCourse.faculties.push(request.user._id);
+            } else {
+                foundCourse.faculties.push(request.user._id);
+            }
+        }
+        foundCourse.save(function(error, savedCourse) {
+            if (error) {
+                console.log(error);
+                return response.json(error);
+            }
+            User.findById(request.user._id, function(error, foundUser) {
+                if (error) {
+                    console.log(error);
+                    return response.json(error);
+                }
+                foundUser.courses.push(savedCourse._id);
+                foundUser.save(function(error, savedUser) {
+                    if (error) {
+                        console.log(error);
+                        return response.json(error);
+                    }
+                    return response.json({ success: "true", msg: "Course added to the user successfully" });
+                });
+            });
+        });
+    });
 });
 
 module.exports = router;
