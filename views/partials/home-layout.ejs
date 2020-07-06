@@ -28,7 +28,7 @@
         </div>
         <div class="nav-right">
             <div class="user-dropdown">
-                <button><i class="fas fa-user-circle user-icon"></i><span class="dd-head"><%= typeof currentUser.firstname != 'undefined' ? currentUser.firstname : currentUser.name %></span><i id="dd-arrow" class="fas fa-caret-down"></i></button>
+                <button><i class="fas fa-user-circle user-icon"></i><span class="dd-head"><%=currentUser.username%></span><i id="dd-arrow" class="fas fa-caret-down"></i></button>
                 <ul class="dropdown-ul" hidden>
                     <li><a href="/fms.edu.in/dashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
                     <li><a href="/fms.edu.in/users/profile"><i class="fas fa-user"></i>Profile</a></li>

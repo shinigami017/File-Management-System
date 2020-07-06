@@ -8,6 +8,7 @@ const User = require("../models/user");
 const Student = require("../models/student");
 const Faculty = require("../models/faculty");
 const Course = require("../models/course");
+const Section = require("../models/section");
 
 let currentUser = null;
 
@@ -242,26 +243,37 @@ router.get("/logout", function(request, response) {
     response.redirect("/fms.edu.in/users/login");
 });
 
-router.post("/add-course", isLoggedIn, function(request, response) {
+router.post("/add-batch", isLoggedIn, function(request, response) {
     const code = request.body.code;
+    let section = request.body.section;
     Course.findOne({ code: code }, function(error, foundCourse) {
         if (error) {
             console.log(error);
             return response.json(error);
         }
-        if (request.user.role === "students") {
+        if (request.user.role === "student") {
             if (typeof foundCourse.students === "undefined") {
+                console.log("foundCourse.students === undefined");
                 foundCourse.students = [];
-                foundCourse.students.push(request.user._id);
+                foundCourse.students.push({ id: request.user._id, username: request.user.username });
             } else {
-                foundCourse.students.push(request.user._id);
+                // Find if course do not already have this student
+                if (!foundCourse.students.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
+                    foundCourse.students.push({ id: request.user._id, username: request.user.username });
+                }
             }
         } else {
             if (typeof foundCourse.faculties === "undefined") {
+                console.log("foundCourse.faculties === undefined");
                 foundCourse.faculties = [];
-                foundCourse.faculties.push(request.user._id);
+                foundCourse.faculties.push({ id: request.user._id, username: request.user.username });
             } else {
-                foundCourse.faculties.push(request.user._id);
+                // Find if course do not already have this faculty
+                if (!foundCourse.faculties.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
+                    foundCourse.faculties.push({ id: request.user._id, username: request.user.username });
+                } else {
+                    console.log("Course already have this faculty");
+                }
             }
         }
         foundCourse.save(function(error, savedCourse) {
@@ -274,13 +286,96 @@ router.post("/add-course", isLoggedIn, function(request, response) {
                     console.log(error);
                     return response.json(error);
                 }
-                foundUser.courses.push(savedCourse._id);
+                // Find if user do not already have this course
+                if (!foundUser.courses.find(e => (JSON.stringify(e) === JSON.stringify(savedCourse._id)))) {
+                    foundUser.courses.push(savedCourse._id);
+                } else {
+                    console.log("User already has this course");
+                }
                 foundUser.save(function(error, savedUser) {
                     if (error) {
                         console.log(error);
                         return response.json(error);
                     }
-                    return response.json({ success: "true", msg: "Course added to the user successfully" });
+                    let c = "(" + savedCourse.code + ")" + " " + savedCourse.name;
+                    Section.findOne({ name: section, course: c }, function(error, foundSection) {
+                        if (error) {
+                            console.log(error);
+                            return response.json(error);
+                        }
+                        if (request.user.role === "student") {
+                            if (typeof foundSection.students === "undefined") {
+                                foundSection.students = [];
+                                foundSection.students.push({ id: request.user._id, username: request.user.username });
+                            } else {
+                                // Find if section do not already have this student
+                                if (!foundSection.students.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
+                                    foundSection.students.push({ id: request.user._id, username: request.user.username });
+                                } else {
+                                    console.log("Section already has this student");
+                                }
+                            }
+                        } else {
+                            if (typeof foundSection.faculties === "undefined") {
+                                foundSection.faculties = [];
+                                foundSection.faculties.push({ id: request.user._id, username: request.user.username });
+                            } else {
+                                // Find if section do not already have this faculty
+                                if (!foundSection.faculties.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
+                                    foundSection.faculties.push({ id: request.user._id, username: request.user.username });
+                                } else {
+                                    console.log("Section already has this faculty");
+                                }
+                            }
+                        }
+                        foundSection.save(function(error, savedSection) {
+                            if (error) {
+                                console.log(error);
+                                return response.json(error);
+                            }
+                            if (request.user.role === "student") {
+                                Student.findOne({ userId: request.user._id }, function(error, foundStudent) {
+                                    if (error) {
+                                        console.log(error);
+                                        return response.json(error);
+                                    }
+                                    // Find if student do not already have this batch
+                                    if (!foundStudent.batches.find(e => (JSON.stringify(e.course) === JSON.stringify({ id: savedCourse._id, name: savedCourse.name }) && JSON.stringify(e.section) === JSON.stringify({ id: savedSection._id, name: savedSection.name })))) {
+                                        foundStudent.batches.push({ course: { id: savedCourse._id, name: savedCourse.name }, section: { id: savedSection._id, name: savedSection.name } });
+                                    } else {
+                                        console.log("Student is already enrolled for this batch");
+                                    }
+                                    foundStudent.save(function(error, savedStudent) {
+                                        if (error) {
+                                            console.log(error);
+                                            return response.json(error);
+                                        }
+                                        return response.json({ success: "true", msg: "Batch updation successfull" });
+                                    });
+                                });
+                            } else {
+                                Faculty.findOne({ userId: request.user._id }, function(error, foundFaculty) {
+                                    if (error) {
+                                        console.log(error);
+                                        return response.json(error);
+                                    }
+                                    // Find if faculty do not already have this batch
+                                    if (!foundFaculty.batches.find(e => (JSON.stringify(e.course) === JSON.stringify({ id: savedCourse._id, name: savedCourse.name }) && JSON.stringify(e.section) === JSON.stringify({ id: savedSection._id, name: savedSection.name })))) {
+                                        foundFaculty.batches.push({ course: { id: savedCourse._id, name: savedCourse.name }, section: { id: savedSection._id, name: savedSection.name } });
+                                    } else {
+                                        console.log("Faculty is already registered with this batch");
+                                    }
+                                    foundFaculty.save(function(error, savedFaculty) {
+                                        if (error) {
+                                            console.log(error);
+                                            return response.json(error);
+                                        }
+                                        return response.json({ success: "true", msg: "Batch updation successfull" });
+                                    });
+                                });
+                            }
+                        });
+                    });
                 });
             });
         });

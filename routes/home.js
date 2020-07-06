@@ -1,20 +1,25 @@
-var express = require("express"),
+const express = require("express"),
     router = express.Router(),
     path = require("path"),
+    mongoose = require("mongoose"),
     multer = require("multer");
 
 
-var { isLoggedIn, forwardAuthenticated } = require("../config/auth");
+const { isLoggedIn, forwardAuthenticated } = require("../config/auth");
 
 // Load models
-var User = require("../models/user");
-var Submission = require("../models/submission");
+const Task = require("../models/task");
+const User = require("../models/user");
+// const Task = require("../models/task");
+const Faculty = require("../models/faculty");
+const Student = require("../models/student");
 const Course = require("../models/course");
+const Submission = require("../models/submission");
 
 let currentUser = null;
 
 // Set Storage engine
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, 'data/files');
     },
@@ -24,7 +29,7 @@ var storage = multer.diskStorage({
 });
 
 //Init upload
-var upload = multer({
+const upload = multer({
     storage: storage,
     limits: { files: 1 },
     fileFilter: function(req, file, cb) {
@@ -57,32 +62,38 @@ router.get("/dashboard", isLoggedIn, function(request, response) {
 });
 
 // Get particular course page
-router.get("/course/:id", isLoggedIn, function(request, response) {
+router.get("/course/:cid", isLoggedIn, function(request, response) {
     // find course and send it to the course page which will show all tasks that the course contains 
-    Course.findById(request.params.id, function(error, foundCourse) {
+    Course.findById(request.params.cid).populate("sections").exec(function(error, foundCourse) {
         if (error) {
             console.log(error);
             request.flash("error_msg", "Something went wrong. Please try again");
             return response.redirect("/fms.edu.in/dashboard");
         }
-        return response.render(((request.user.role == "student") ? "files/student-portal/course" : "files/faculty-portal/course"), { currentUser: currentUser, course: foundCourse });
+        if (request.user.role == "faculty") {
+            return response.render("files/faculty-portal/course", { currentUser: currentUser, course: foundCourse });
+        }
+        // for student
+        // find tasks for him in this course
+        return response.render("files/student-portal/course", { currentUser: currentUser, course: foundCourse });
+
     });
 });
 
 // Student Routes
 
 // Get particular task page for course cid
-router.get("/course/activity", isLoggedIn, function(request, response) {
+router.get("/course/:cid/activity/:tid", isLoggedIn, function(request, response) {
     response.render("files/student-portal/course-task", { submitted: false, currentUser: currentUser });
 });
 
 // Get submission page for task (tid) of course (cid)
-router.get("/course/activity/submission", isLoggedIn, function(request, response) {
+router.get("/course/:cid/activity/:tid/submission", isLoggedIn, function(request, response) {
     // Find task and course in database and send it to  submission page
     response.render("files/student-portal/submission", { currentUser: currentUser });
 });
 
-router.post("/course/activity/submission", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
+router.post("/course/:cid/activity/:tid/submission", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
     // uploading submission file to local data base
     const file = request.file;
     if (!file) {
@@ -98,7 +109,7 @@ router.post("/course/activity/submission", isLoggedIn, upload.single("fileUpload
             username: request.user.username,
             role: request.user.role
         };
-    var newSubmission = new Submission({ filename: filename, filepath: filepath, user: user });
+    const newSubmission = new Submission({ filename: filename, filepath: filepath, user: user });
     newSubmission.save(function(error, submission) {
         if (error) {
             response.redirect("/fms.edu.in/course/activity");
@@ -132,7 +143,8 @@ router.get("/updates", isLoggedIn, function(request, response) {
 // Faculty Routes
 
 // Add/update task by faculty for any course
-router.post("/course/add-task", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
+
+router.post("/course/:cid/add-task", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
     // uploading task file to local database
     const file = request.file;
     if (!file) {
@@ -141,35 +153,65 @@ router.post("/course/add-task", isLoggedIn, upload.single("fileUploaded"), funct
         error.httpStatusCode = 400;
         return next(error);
     }
-    let filename = file.filename,
+    // storing all element of Task locally
+    let title = request.body.title,
+        filename = file.filename,
         filepath = file.destination,
-        user = {
-            id: request.user._id,
-            username: request.user.username,
-            role: request.user.role
-        };
-    var newSubmission = new Submission({ filename: filename, filepath: filepath, user: user });
-    newSubmission.save(function(error, submission) {
+        course = request.params.cid,
+        sections = [];
+
+    if (request.body.sectionA != undefined) {
+        sections.push(request.body.sectionA);
+    }
+    if (request.body.sectionB != undefined) {
+        sections.push(request.body.sectionB);
+    }
+    if (request.body.sectionC != undefined) {
+        sections.push(request.body.sectionC);
+    }
+    if (request.body.sectionD != undefined) {
+        sections.push(request.body.sectionD);
+    }
+    if (request.body.sectionE != undefined) {
+        sections.push(request.body.sectionE);
+    }
+    if (request.body.sectionF != undefined) {
+        sections.push(request.body.sectionF);
+    }
+
+    // getting faculty from user's id
+    Faculty.findOne({ userId: request.user._id }).populate("tasks").exec(function(error, foundFaculty) {
         if (error) {
-            response.redirect("/fms.edu.in/course");
-            return console.log(error);
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/course/" + request.params.cid);
         }
-        User.findById(request.user._id).populate("submissions").exec(function(error, foundUser) {
-            if (error) {
-                response.redirect("/fms.edu.in/course");
-                return console.log(error);
+        let faculty = {
+                id: foundFaculty._id,
+                username: request.user.username
             }
-            foundUser.submissions.push(submission);
-            foundUser.save(function(error, updatedUser) {
+            // creating Task object
+        const newTask = new Task({ title: title, faculty: faculty, filename: filename, filepath: filepath, sections: sections, course: course });
+        // saving newTask to database
+        newTask.save(function(error, savedTask) {
+            if (error) {
+                console.log(error);
+                request.flash("error_msg", "Something went wrong. Please try again");
+                return response.redirect("/fms.edu.in/course/" + request.params.cid);
+            }
+            // adding current task to faculty
+            foundFaculty.tasks.push(savedTask);
+            // saving updated faculty to database
+            foundFaculty.save(function(error, savedFaculty) {
                 if (error) {
-                    response.redirect("/fms.edu.in/course");
-                    return console.log(error);
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/course/" + request.params.cid);
                 }
-                response.render("test", { submission: submission });
+                return response.render("test", { submission: savedTask });
             });
         });
     });
-    // response.redirect("/fms.edu.in/course");
 });
 
 // Get all submissions on a particular task of a course

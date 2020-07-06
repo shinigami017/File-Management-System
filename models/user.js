@@ -44,10 +44,6 @@ var userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
     }],
-    submissions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Submission"
-    }],
     date: {
         type: Date,
         default: Date.now

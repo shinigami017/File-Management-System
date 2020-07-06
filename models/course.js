@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const courseSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     code: {
         type: String,
@@ -14,17 +15,19 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Section"
     }],
-    faculties: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Faculty"
-    }],
     students: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Student"
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Student"
+        },
+        username: String
     }],
-    submissions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Submission"
+    faculties: [{
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Faculty"
+        },
+        username: String
     }]
 });
 

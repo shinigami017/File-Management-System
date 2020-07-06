@@ -1,13 +1,13 @@
-var express = require("express"),
+const express = require("express"),
+    mongoose = require("mongoose"),
     path = require("path"),
     bodyParser = require("body-parser"),
     flash = require("connect-flash"),
     session = require("express-session"),
-    passport = require("passport"),
-    mongoose = require("mongoose");
+    passport = require("passport");
 
 // Init App
-var app = express();
+const app = express();
 
 // Connect to MongoDB
 mongoose.connect("mongodb+srv://fms_user:fms_password@shinigami017-azees.mongodb.net/FileManagementSystem?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -52,7 +52,7 @@ app.use(function(req, res, next) {
 });
 
 // routes setup
-var indexRoute = require("./routes/index"),
+const indexRoute = require("./routes/index"),
     homeRoute = require("./routes/home"),
     userRoute = require("./routes/users");
 app.use("/", indexRoute);

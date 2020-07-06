@@ -19,6 +19,7 @@ router.post("/addsection", function(request, response) {
         let newSection = new Section({ name: i, course: course });
         newSection.save(function(error, section) {
             if (error) {
+                console.log(error);
                 return console.log("Section not added");
             }
             console.log("Section added successfully");

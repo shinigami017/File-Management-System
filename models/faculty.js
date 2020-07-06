@@ -5,17 +5,25 @@ var facultySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    courses: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
-    },
-    sections: [{
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Section"
+    batches: [{
+        course: {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Course"
+            },
+            name: String
         },
-        name: String,
-        course: String
+        section: {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Section"
+            },
+            name: String,
+        }
+    }],
+    tasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task"
     }]
 });
 
