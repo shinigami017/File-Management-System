@@ -71,12 +71,24 @@ router.get("/course/:cid", isLoggedIn, function(request, response) {
             return response.redirect("/fms.edu.in/dashboard");
         }
         if (request.user.role == "faculty") {
-            return response.render("files/faculty-portal/course", { currentUser: currentUser, course: foundCourse });
+            Faculty.findOne({ userId: request.user._id }).populate("tasks").exec(function(error, foundFaculty) {
+                if (error) {
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/dashboard");
+                }
+                let tasks = foundFaculty.tasks.filter((task) => {
+                    return JSON.stringify(task.course) === JSON.stringify(request.params.cid);
+                }).sort((a, b) => {
+                    return (a.date < b.date) ? 1 : -1;
+                });
+                return response.render("files/faculty-portal/course", { currentUser: currentUser, course: foundCourse, tasks: tasks });
+            });
+        } else {
+            // for student
+            // find tasks for him in this course
+            return response.render("files/student-portal/course", { currentUser: currentUser, course: foundCourse });
         }
-        // for student
-        // find tasks for him in this course
-        return response.render("files/student-portal/course", { currentUser: currentUser, course: foundCourse });
-
     });
 });
 
@@ -143,7 +155,6 @@ router.get("/updates", isLoggedIn, function(request, response) {
 // Faculty Routes
 
 // Add/update task by faculty for any course
-
 router.post("/course/:cid/add-task", isLoggedIn, upload.single("fileUploaded"), function(request, response, next) {
     // uploading task file to local database
     const file = request.file;
@@ -155,29 +166,11 @@ router.post("/course/:cid/add-task", isLoggedIn, upload.single("fileUploaded"), 
     }
     // storing all element of Task locally
     let title = request.body.title,
+        duedate = request.body.duedate,
         filename = file.filename,
         filepath = file.destination,
         course = request.params.cid,
-        sections = [];
-
-    if (request.body.sectionA != undefined) {
-        sections.push(request.body.sectionA);
-    }
-    if (request.body.sectionB != undefined) {
-        sections.push(request.body.sectionB);
-    }
-    if (request.body.sectionC != undefined) {
-        sections.push(request.body.sectionC);
-    }
-    if (request.body.sectionD != undefined) {
-        sections.push(request.body.sectionD);
-    }
-    if (request.body.sectionE != undefined) {
-        sections.push(request.body.sectionE);
-    }
-    if (request.body.sectionF != undefined) {
-        sections.push(request.body.sectionF);
-    }
+        sections = request.body.sections;
 
     // getting faculty from user's id
     Faculty.findOne({ userId: request.user._id }).populate("tasks").exec(function(error, foundFaculty) {
@@ -187,40 +180,69 @@ router.post("/course/:cid/add-task", isLoggedIn, upload.single("fileUploaded"), 
             return response.redirect("/fms.edu.in/course/" + request.params.cid);
         }
         let faculty = {
-                id: foundFaculty._id,
-                username: request.user.username
-            }
+            id: foundFaculty._id,
+            username: request.user.username
+        }
+        if (request.body.taskid === undefined) {
             // creating Task object
-        const newTask = new Task({ title: title, faculty: faculty, filename: filename, filepath: filepath, sections: sections, course: course });
-        // saving newTask to database
-        newTask.save(function(error, savedTask) {
-            if (error) {
-                console.log(error);
-                request.flash("error_msg", "Something went wrong. Please try again");
-                return response.redirect("/fms.edu.in/course/" + request.params.cid);
-            }
-            // adding current task to faculty
-            foundFaculty.tasks.push(savedTask);
-            // saving updated faculty to database
-            foundFaculty.save(function(error, savedFaculty) {
+            const newTask = new Task({ title: title, faculty: faculty, filename: filename, filepath: filepath, sections: sections, course: course, duedate: duedate });
+            // saving newTask to database
+            newTask.save(function(error, savedTask) {
                 if (error) {
                     console.log(error);
                     request.flash("error_msg", "Something went wrong. Please try again");
                     return response.redirect("/fms.edu.in/course/" + request.params.cid);
                 }
-                return response.render("test", { submission: savedTask });
+                // adding current task to faculty
+                foundFaculty.tasks.push(savedTask);
+                // saving updated faculty to database
+                foundFaculty.save(function(error, savedFaculty) {
+                    if (error) {
+                        console.log(error);
+                        request.flash("error_msg", "Something went wrong. Please try again");
+                        return response.redirect("/fms.edu.in/course/" + request.params.cid);
+                    }
+                    // return response.render("test", { submission: savedTask });
+                    request.flash("success_msg", "Task added successfully");
+                    return response.redirect("/fms.edu.in/course/" + request.params.cid);
+                });
             });
-        });
+        } else {
+            // find and update the task from database
+            Task.findByIdAndUpdate(request.body.taskid, { title: title, faculty: faculty, filename: filename, filepath: filepath, sections: sections, course: course, duedate: duedate }, { new: true }, function(error, updatedTask) {
+                if (error) {
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.body.taskid + "/all-submissions");
+                }
+                request.flash("success_msg", "Task updated successfully");
+                return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.body.taskid + "/all-submissions");
+            });
+        }
     });
 });
 
 // Get all submissions on a particular task of a course
-router.get("/course/task/all-submissions", isLoggedIn, function(request, response) {
-    response.render("files/faculty-portal/submissions", { currentUser: currentUser });
+router.get("/course/:cid/task/:tid/all-submissions", isLoggedIn, function(request, response) {
+    Course.findById(request.params.cid).populate("sections").exec(function(error, foundCourse) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/course/:cid");
+        }
+        Task.findById(request.params.tid).populate("sections").populate("submissions").exec(function(error, foundTask) {
+            if (error) {
+                console.log(error);
+                request.flash("error_msg", "Something went wrong. Please try again");
+                return response.redirect("/fms.edu.in/course/:cid");
+            }
+            return response.render("files/faculty-portal/submissions", { currentUser: currentUser, course: foundCourse, task: foundTask });
+        });
+    });
 });
 
 // Get a particular submission on a particular task of a course
-router.get("/course/task/submission", isLoggedIn, function(request, response) {
+router.get("/course/:cid/task/:tid/submission/:sid", isLoggedIn, function(request, response) {
     response.render("files/faculty-portal/submission", { currentUser: currentUser });
 });
 

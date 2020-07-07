@@ -195,3 +195,9 @@ form.content-body {
 #file-text {
     align-self: center;
 }
+
+.content-fade {
+    display: flex;
+    justify-content: center;
+    color: grey;
+}

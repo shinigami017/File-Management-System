@@ -30,11 +30,14 @@
                                 <div class="class-rb-btn">
                                     <%course.sections.sort();%>
                                         <%course.sections.forEach((section) => {%>
-                                            <input class="class-rb" type="radio" id="rb-<%=section.name%>" name="section<%=section.name%>" value="<%=section._id%>">
+                                            <input class="class-rb" type="checkbox" id="rb-<%=section.name%>" name="sections" value="<%=section._id%>">
                                             <label for="rb-<%=section.name%>">Section <%=section.name%></label>
                                             <%});%>
-                                                <!--  issue : deselect radio button on doble click*************************************** -->
                                 </div>
+                            </div>
+                            <div class="form-element">
+                                <label for="task-date" class="form-title">Due date : </label>
+                                <input type="date" id="task-date" name="duedate">
                             </div>
                             <div class="form-element form-submit-btn">
                                 <input type="submit" value="Submit">
@@ -44,7 +47,21 @@
                 <div class="sub-content">
                     <p class="content-title">History</p>
                     <div class="content-body">
-                        <div class="content-ps">
+                        <%if(tasks.length === 0){%>
+                            <div class="content-ps content-fade">
+                                <div class="t-title">No tasks to show</div>
+                            </div>
+                            <%}else{%>
+                                <%tasks.forEach((task) => {%>
+                                    <div class="content-ps">
+                                        <div class="t-title">
+                                            <%=task.title%>
+                                        </div>
+                                        <div class="t-link"><a href="/fms.edu.in/course/<%=course._id%>/task/<%=task._id%>/all-submissions">Go to activity</a></div>
+                                    </div>
+                                    <%});%>
+                                        <%}%>
+                                            <!-- <div class="content-ps">
                             <div class="t-title">Task Title</div>
                             <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
                         </div>
@@ -55,11 +72,7 @@
                         <div class="content-ps">
                             <div class="t-title">Task Title</div>
                             <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>

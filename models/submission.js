@@ -9,22 +9,20 @@ var submissionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    user: {
+    student: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        username: {
-            type: String,
-            required: true
-        },
-        role: {
-            type: String,
-            required: true
-        }
+        username: String,
+        name: String
+    },
+    task: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task"
     },
     course: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
     },
     date: {
