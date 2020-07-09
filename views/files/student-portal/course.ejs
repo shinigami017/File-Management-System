@@ -2,7 +2,6 @@
 
     <section>
         <header>
-            <!-- <h1 class="main-title">Course $</h1> -->
             <h1 class="main-title">(
                 <%=course.code%>)
                     <%=course.name%>
@@ -14,23 +13,20 @@
                 <div class="sub-content">
                     <p class="content-title">Activity</p>
                     <div class="content-body">
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/activity">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/activity">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/activity">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/activity">Go to activity</a></div>
-                        </div>
-                        <p class="note"><span>Note: </span>Submission will be online and only in (.pdf) format.</p>
+                        <%if(tasks != "undefined" && tasks.length > 0){%>
+                            <%tasks.forEach((task) => {%>
+                                <div class="content-ps">
+                                    <div class="t-title">
+                                        <%=task.title%>
+                                    </div>
+                                    <div class="t-link"><a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>">Go to activity</a></div>
+                                </div>
+                                <%});%>
+                                    <%}else{%>
+                                        <div class="content-ps content-fade">
+                                            <div class="t-title">No activities to show</div>
+                                        </div>
+                                        <%}%>
                     </div>
 
                 </div>

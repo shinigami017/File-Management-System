@@ -3,15 +3,24 @@
     <section>
         <header>
             <h1 class="main-title">Course $</h1>
-            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity">Activity</a></p>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/<%=course._id%>">(<%=course.code%>) <%=course.name%></a><i class="fas fa-chevron-right"></i>
+                <a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>">Activity</a>
+            </p>
         </header>
         <div class="container">
             <div class="content">
                 <div class="sub-content">
-                    <p class="content-title">Assignment / Lab Program / Report Submission</p>
+                    <p class="content-title">
+                        <%=task.title%>
+                    </p>
                     <div class="content-body">
-                        <div class="content-ps">Problem Statement</div>
-                        <p class="note"><span>Note: </span>Submission will be online and only in (.doc) format.</p>
+                        <div class="content-ps">
+                            <a class="task-link" download="<%=task.filename%>" href="/<%=task.filepath%>/<%=task.filename%>" target="_blank">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                                <%=task.filename%>
+                            </a>
+                        </div>
+                        <p class="note"><span>Note: </span>Submission will be online and only in (.pdf) format.</p>
                     </div>
                 </div>
 
@@ -20,40 +29,54 @@
                     <ul class="content-body sub-status">
                         <li class="status-bar">
                             <div class="status-tt">Submission Status</div>
-
-                            <% if(submitted){ %>
-
-                                <div class="status-tb">Submitted for grading</div>
+                            <% if(submission === "undefined"){ %>
+                                <div class="status-tb">No attempt</div>
                                 <%} else {%>
-
-                                    <div class="status-tb">No attempt</div>
+                                    <div class="status-tb">Submitted for grading</div>
                                     <%}%>
                         </li>
                         <li class="status-bar">
                             <div class="status-tt">Grading Status</div>
-                            <div class="status-tb">Not graded / Grades</div>
+                            <% if(submission === "undefined"){ %>
+                                <div class="status-tb">Not graded</div>
+                                <% }else{ %>
+                                    <div class="status-tb">
+                                        <%=(typeof submission.grades != undefined && submission.grades != "") ? submission.grades : "Not graded"%>
+                                    </div>
+                                    <%}%>
                         </li>
                         <li class="status-bar">
                             <div class="status-tt">Due date</div>
-                            <div class="status-tb">DD : MM : YYYY (Date Format)</div>
+                            <%let dd = new Date(task.duedate).toISOString();%>
+                                <div class="status-tb">
+                                    <%=dd.substring(0,10)%>
+                                </div>
                         </li>
                         <li class="status-bar status-rm">
                             <div class="status-tt">Remarks</div>
-                            <div class="status-tb">No remarks / Remarks left by faculty</div>
+                            <% if(submission === "undefined"){ %>
+                                <div class="status-tb">
+                                    No remarks
+                                </div>
+                                <%}else{%>
+                                    <div class="status-tb">
+                                        <%=(typeof submission.remarks != undefined && submission.remarks != "") ? submission.remarks : "No remarks"%>
+                                    </div>
+                                    <%}%>
                         </li>
                     </ul>
                 </div>
 
                 <div class="btn-box">
-                    <% if(submitted){ %>
-
-                        <a href="/fms.edu.in/course/activity/submission">Edit Submission</a>
+                    <% if(submission === "undefined"){ %>
+                        <a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>/submission">Add Submission</a>
                         <%} else {%>
-
-                            <a href="/fms.edu.in/course/activity/submission">Add Submission</a>
+                            <a download="<%=submission.filename%>" href="/<%=submission.filepath%>/<%=submission.filename%>" target="_blank">
+                                View Submission
+                            </a>
+                            <a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>/submission/<%=submission._id%>">Edit Submission</a>
                             <%}%>
                 </div>
-
             </div>
         </div>
 

@@ -25,6 +25,14 @@ var submissionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
     },
+    grades: {
+        type: String,
+        default: ""
+    },
+    remarks: {
+        type: String,
+        default: ""
+    },
     date: {
         type: Date,
         default: Date.now

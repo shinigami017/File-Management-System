@@ -2,19 +2,27 @@
     <section>
         <header>
             <h1 class="main-title">
-                Course $
+                (
+                <%=course.code%>)
+                    <%=course.name%>
             </h1>
-            <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i>
-                <a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity">Activity</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/activity/submission">Submission</a></p>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">My Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/<%=course._id%>">(<%=course.code%>) <%=course.name%></a><i class="fas fa-chevron-right"></i>
+                <a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>">Activity</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>/submission">Submission</a></p>
+            </p>
         </header>
         <div class="container">
             <div class="content">
                 <div class="sub-content">
                     <p class="content-title">
-                        Task Title
+                        <%=task.title%>
                     </p>
                     <div class="content-body content-sub">
-                        <div class="content-ps">Problem Statement</div>
+                        <div class="content-ps">
+                            <a class="task-link" download="<%=task.filename%>" href="/<%=task.filepath%>/<%=task.filename%>" target="_blank">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                                <%=task.filename%>
+                            </a>
+                        </div>
                         <div class="note"><span>Instructions: </span>
                             <ul>
                                 <li>File uploaded should be named according to file name convention mentioned in the problem statement.</li>
@@ -29,8 +37,9 @@
                     <p class="content-title">File Submission</p>
                     <div class="content-body">
                         <%- include ("../../partials/messages") %>
-                            <form method="POST" action="/fms.edu.in/course/activity/submission" enctype="multipart/form-data">
+                            <form method="POST" action="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>/submission" enctype="multipart/form-data">
                                 <div class="form-field">
+                                    <input type="hidden" name="submissionId" value="<%=typeof submissionId != 'undefined' ? submissionId : ''%>">
                                     <input type="file" name="fileUploaded" id="file-input" onchange="myFunction4()" hidden>
                                     <button type="button" id="file-btn" onclick="myFunction3()">CHOOSE A FILE</button>
                                     <span id="file-text">No file chosen, yet.</span>
@@ -38,7 +47,7 @@
 
                                 <div class="sub-btn">
                                     <input type="submit" class="btn-sc" value="Save Changes">
-                                    <div class="btn-cl"><a href="/fms.edu.in/course/activity">Cancel</a></div>
+                                    <div class="btn-cl"><a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>">Cancel</a></div>
                                 </div>
                             </form>
                     </div>

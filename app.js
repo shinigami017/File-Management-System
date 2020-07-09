@@ -10,7 +10,7 @@ const express = require("express"),
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://fms_user:fms_password@shinigami017-azees.mongodb.net/FileManagementSystem?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connect("mongodb+srv://fms_user:fms_password@shinigami017-azees.mongodb.net/FileManagementSystem?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
 
 // EJS and View Engine
 app.set("views", path.join(__dirname, "views"));
