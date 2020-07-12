@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
     }
 });
 
-
 //Init upload
 const upload = multer({
     storage: storage,
@@ -262,8 +261,7 @@ router.post("/course/:cid/activity/:tid/submission", isLoggedIn, upload.single("
 
 // Get updates page with all recent tasks
 router.get("/updates", isLoggedIn, function(request, response) {
-    // Search in tasks db for the newly created tasks 
-    // and tasks with pending due date
+
     response.render("files/student-portal/updates", { currentUser: currentUser });
 });
 
@@ -359,13 +357,13 @@ router.get("/course/:cid/task/:tid/all-submissions", isLoggedIn, function(reques
         if (error) {
             console.log(error);
             request.flash("error_msg", "Something went wrong. Please try again");
-            return response.redirect("/fms.edu.in/course/:cid");
+            return response.redirect("/fms.edu.in/course/" + request.params.cid);
         }
         Task.findById(request.params.tid).populate("sections").populate("submissions").exec(function(error, foundTask) {
             if (error) {
                 console.log(error);
                 request.flash("error_msg", "Something went wrong. Please try again");
-                return response.redirect("/fms.edu.in/course/:cid");
+                return response.redirect("/fms.edu.in/course/" + request.params.cid);
             }
             return response.render("files/faculty-portal/submissions", { currentUser: currentUser, course: foundCourse, task: foundTask });
         });
@@ -374,8 +372,49 @@ router.get("/course/:cid/task/:tid/all-submissions", isLoggedIn, function(reques
 
 // Get a particular submission on a particular task of a course
 router.get("/course/:cid/task/:tid/submission/:sid", isLoggedIn, function(request, response) {
-    response.render("files/faculty-portal/submission", { currentUser: currentUser });
+    Course.findById(request.params.cid, function(error, foundCourse) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/all-submissions");
+        }
+        Task.findById(request.params.tid, function(error, foundTask) {
+            if (error) {
+                console.log(error);
+                request.flash("error_msg", "Something went wrong. Please try again");
+                return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/all-submissions");
+            }
+            Submission.findById(request.params.sid, function(error, foundSubmission) {
+                if (error) {
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/all-submissions");
+                }
+                return response.render("files/faculty-portal/submission", { currentUser: currentUser, course: foundCourse, task: foundTask, submission: foundSubmission });
+            });
+        });
+    });
 });
 
+router.post("/course/:cid/task/:tid/submission/:sid", isLoggedIn, function(request, response) {
+    Submission.findById(request.params.sid, function(error, foundSubmission) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/all-submissions");
+        }
+        foundSubmission.remarks = request.body.remarks;
+        foundSubmission.grades = request.body.grades;
+        foundSubmission.save(function(error, savedSubmission) {
+            if (error) {
+                console.log(error);
+                request.flash("error_msg", "Something went wrong. Please try again");
+                return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/submission/" + request.params.sid);
+            }
+            request.flash("success_msg", "Submission evaluation saved successfully");
+            return response.redirect("/fms.edu.in/course/" + request.params.cid + "/task/" + request.params.tid + "/submission/" + request.params.sid);
+        });
+    });
+});
 
 module.exports = router;

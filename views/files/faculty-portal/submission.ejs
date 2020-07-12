@@ -3,41 +3,54 @@
     <section>
         <header>
             <h1 class="main-title">
-                Course $
+                <%=course.code%>)
+                    <%=course.name%>
             </h1>
             <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i>My Courses<i class="fas fa-chevron-right"></i>
-                <a href="/fms.edu.in/course">Course $</a><i class="fas fa-chevron-right"></i>Task Title<i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/task/all-submissions">Submissions</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/task/submission">Submission</a></p>
+                <a href="/fms.edu.in/course/<%=course._id%>">(<%=course.code%>) <%=course.name%></a><i class="fas fa-chevron-right"></i>
+                <%=task.title%><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/course/<%=course._id%>/task/<%=task._id%>/all-submissions">Submissions</a><i class="fas fa-chevron-right"></i>
+                    <a href="/fms.edu.in/course/<%=course._id%>/task/<%=task._id%>/submission/<%=submission._id%>">
+                        <%=submission.student.name%>(
+                            <%=submission.student.username%>)</a>
+            </p>
         </header>
         <div class="container">
             <div class="content">
 
                 <div class="sub-content">
-                    <p class="content-title">Task Title</p>
+                    <p class="content-title">
+                        <%=task.title%>
+                    </p>
                     <%- include ("../../partials/messages") %>
-                        <form method="POST" action="/fms.edu.in/course/task/submission" class="content-body">
+                        <form method="POST" action="/fms.edu.in/course/<%=course._id%>/task/<%=task._id%>/submission/<%=submission._id%>" class="content-body">
                             <div class="form-element">
                                 <p class="form-title">Student Name : </p>
-                                <p class="form-value">Student Name</p>
+                                <p class="form-value">
+                                    <%=submission.student.name%>
+                                </p>
                             </div>
-
                             <div class="form-element">
                                 <p class="form-title">Student Roll : </p>
-                                <p class="form-value">**********</p>
+                                <p class="form-value">
+                                    <%=submission.student.username%>
+                                </p>
                             </div>
-
                             <div class="form-element">
                                 <p class="form-title">Submission : </p>
-                                <p class="form-value">Solution.pdf</p>
+                                <!-- <p class="form-value">Solution.pdf</p> -->
+                                <a download="<%=submission.filename%>" class="form-value" href="/<%=submission.filepath%>/<%=submission.filename%>" target="_blank">
+                                    <%=submission.filename%>
+                                </a>
                             </div>
                             <div class="form-element">
                                 <label class="form-title" for="submission-remark">Remarks : </label>
-                                <textarea name="submission-remark" id="submission-remark"></textarea>
+                                <textarea name="remarks" id="submission-remark"><%=submission.remarks%></textarea>
                             </div>
                             <div class="form-element">
                                 <label class="form-title" for="submission-grades">Grades : </label>
-                                <input type="text" name="submission-grades" id="submission-grades">
+                                <input type="text" name="grades" id="submission-grades" value="<%=submission.grades%>">
                             </div>
-                            <div class="form-element form-submit-btn">
+                            <div class="form-element form-submit-btn ">
                                 <input type="submit" value="Submit">
                             </div>
                         </form>
