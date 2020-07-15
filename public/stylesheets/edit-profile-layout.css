@@ -36,7 +36,8 @@ form .field-body input[type="text"],
 form .field-body input[type="number"],
 form .field-body input[type="email"],
 form .field-body input[type="tel"],
-form .field-body input[type="password"] {
+form .field-body input[type="password"],
+form .field-body select {
     width: 100%;
     height: 100%;
     padding-left: 15px;

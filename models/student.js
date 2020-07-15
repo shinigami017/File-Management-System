@@ -5,7 +5,6 @@ var studentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    branch: String,
     batches: [{
         course: {
             id: {

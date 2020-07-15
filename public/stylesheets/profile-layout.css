@@ -53,7 +53,11 @@ section .container {
 }
 
 .ud-content {
-    width: 40%
+    width: 40%;
+}
+
+.bt-content {
+    width: 80%;
 }
 
 .cd-content {
@@ -61,7 +65,8 @@ section .container {
 }
 
 .cd-content,
-.ud-content {
+.ud-content,
+.bt-content {
     /* flex: 40%; */
     /* width: 20%; */
     border: 1px solid gray;
@@ -160,7 +165,8 @@ section .container {
         display: block;
     }
     .ud-content,
-    .cd-content {
+    .cd-content,
+    .bt-content {
         width: 95%;
     }
 }

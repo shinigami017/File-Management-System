@@ -121,7 +121,6 @@ router.post("/login", passport.authenticate("local", {
 
 // Get the user's profile page
 router.get("/profile", isLoggedIn, function(request, response) {
-    // get all the courses of current user and send it with the user's data
     User.findById(request.user._id).populate("courses").exec(function(error, foundUser) {
         if (error) {
             console.log(error);
@@ -129,34 +128,86 @@ router.get("/profile", isLoggedIn, function(request, response) {
             return response.redirect("/fms.edu.in/users/login");
         }
         currentUser = foundUser;
-        response.render("files/student-portal/profile", { currentUser: currentUser });
+        if (foundUser.role === "faculty") {
+            Faculty.findOne({ "userId": foundUser._id }, function(error, foundFaculty) {
+                if (error) {
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/users/login");
+                }
+                return response.render("files/profile", { currentUser: currentUser, batches: foundFaculty.batches });
+            });
+        } else {
+            Student.findOne({ "userId": foundUser._id }, function(error, foundStudent) {
+                if (error) {
+                    console.log(error);
+                    request.flash("error_msg", "Something went wrong. Please try again");
+                    return response.redirect("/fms.edu.in/users/login");
+                }
+                return response.render("files/profile", { currentUser: currentUser, batches: foundStudent.batches });
+            });
+        }
     });
 });
 
 // Get the user's edit profile page
 router.get("/editprofile", isLoggedIn, function(request, response) {
-    // Check for the role of user
-    // get student and send it to edit profile
-    // Student.findOne({ username: request.user.username }, function(error, foundStudent) {
-    //     if (error) {
-    //         response.json(error);
-    //     } else {
-    //         response.render("files/edit-profile", { currentUser: foundStudent });
-    //     }
-    // });
-    response.render("files/student-portal/edit-profile", { currentUser: currentUser });
+    User.findById(request.user._id).populate("courses").exec(function(error, foundUser) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/users/login");
+        }
+        currentUser = foundUser;
+        return response.render("files/edit-profile", { currentUser: currentUser });
+    });
 });
 
 // Post method to process the profile update
 router.post("/editprofile", isLoggedIn, function(request, response) {
-    // Check for the role of user
-    // get student details from body and update it to database
-    // if error generated then redirect to editpassword with the error message
-    // else redirect to profile
-    // response.render("files/edit-profile", { user: request.user });
-    response.redirect("/fms.edu.in/users/profile");
+    User.findById(request.user._id).populate("courses").exec(function(error, foundUser) {
+        if (error) {
+            console.log(error);
+            request.flash("error_msg", "Something went wrong. Please try again");
+            return response.redirect("/fms.edu.in/users/login");
+        }
+        currentUser = foundUser;
+        let errors = [];
+        const { firstname, lastname, email, phone, gender, year, program, branch } = request.body;
+        if (!firstname) {
+            errors.push({ msg: "Please enter firstname" });
+        }
+        if (!lastname) {
+            errors.push({ msg: "Please enter firstname" });
+        }
+        if (!email) {
+            errors.push({ msg: "Please enter email" });
+        }
+        if (!phone) {
+            errors.push({ msg: "Please enter phone number" });
+        }
+        if (errors.length > 0) {
+            return response.render("files/edit-profile", { currentUser: currentUser, errors: errors });
+        }
+        foundUser.firstname = firstname;
+        foundUser.lastname = lastname;
+        foundUser.email = email;
+        foundUser.phone = phone;
+        foundUser.gender = gender;
+        foundUser.year = year;
+        foundUser.program = program;
+        foundUser.branch = branch;
+        foundUser.save(function(error, savedUser) {
+            if (error) {
+                console.log(error);
+                request.flash("error_msg", "Something went wrong. Please try again");
+                return response.redirect("/fms.edu.in/users/editprofile");
+            }
+            currentUser = savedUser;
+            return response.redirect("/fms.edu.in/users/profile");
+        });
+    });
 });
-
 // Get the user's change password page
 router.get("/changepassword", isLoggedIn, function(request, response) {
     response.render("files/change-password", { currentUser: currentUser });

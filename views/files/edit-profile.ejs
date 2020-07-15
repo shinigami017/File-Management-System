@@ -1,0 +1,118 @@
+<%- include ("../partials/home-layout")%>
+
+    <section>
+        <header>
+            <h1 class="main-title"><i class="fas fa-user-circle"></i>
+                <%=currentUser.firstname+" "+currentUser.lastname%>
+            </h1>
+            <p class="path-track"><a href="/fms.edu.in/dashboard">Dashboard</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/users/profile">Profile</a><i class="fas fa-chevron-right"></i><a href="/fms.edu.in/users/editprofile">Edit Profile</a></p>
+        </header>
+
+        <div class="container">
+            <div class="content">
+
+                <div class="sub-content ep-content">
+                    <p class="content-title">
+                        <%=currentUser.firstname%>
+                            <%=currentUser.lastname%>
+                    </p>
+                    <%- include ("../partials/messages") %>
+                        <form class="content-body ep-form" method="POST" action="/fms.edu.in/users/editprofile">
+
+                            <!-- name -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="firstname">First Name</label></div>
+                                <div class="field-body"><input type="text" name="firstname" id="firstname" value="<%= typeof currentUser.firstname != 'undefined' ? currentUser.firstname : '' %>"></div>
+                            </div>
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="lastname">Last Name</label></div>
+                                <div class="field-body"><input type="text" name="lastname" id="lastname" value="<%= typeof currentUser.lastname != 'undefined' ? currentUser.lastname : '' %>"></div>
+                            </div>
+                            <!-- email address -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="email">Email Address</label></div>
+                                <div class="field-body"><input type="email" name="email" id="email" value="<%= typeof currentUser.email != 'undefined' ? currentUser.email : '' %>"></div>
+                            </div>
+                            <!-- phone number -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="phone">Phone Number</label></div>
+                                <div class="field-body"><input type="tel" name="phone" id="phone" value="<%= typeof currentUser.phone != 'undefined' ? currentUser.phone : '' %>"></div>
+                            </div>
+                            <!-- gender -->
+
+                            <div class="input-field">
+                                <div class="field-title">Gender</div>
+                                <div class="field-body">
+                                    <div class="field-body-rb"><input type="radio" name="gender" id="male" value="male" <% if(currentUser.gender !="female" ) {%>checked
+                                        <%}%> >
+                                            <label for="male">Male</label></div>
+                                    <div class="field-body-rb"><input type="radio" name="gender" id="female" value="female" <% if(currentUser.gender=="female" ) {%>checked
+                                        <%}%> >
+                                            <label for="female">Female</label></div>
+                                    <div class="field-body-rb"><input type="radio" name="gender" id="other" value="other">
+                                        <label for="other">Other</label></div>
+                                </div>
+                            </div>
+
+                            <!-- program type -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="program">Program Type</label></div>
+                                <div class="field-body">
+                                    <!-- <input type="text" name="program" id="program" value="<%= //typeof currentUser.program != 'undefined' ? currentUser.program : '' %>"> -->
+                                    <select name="program" id="program" onchange="myFunction5()">
+                                    <option value="">Select your program type</option>
+                                    <option value="Bachelor of Arts (BA)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Arts (BA)") {%> selected <%}%> >Bachelor of Arts (BA)</option>
+                                    <option value="Bachelor of Architecture (BArch)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Architecture (BArch)") {%> selected <%}%> >Bachelor of Architecture (BArch)</option>
+                                    <option value="Bachelor of Business Administration (BBA)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Business Administration (BBA)") {%> selected <%}%> >Bachelor of Business Administration (BBA)</option>
+                                    <option value="Bachelor of Computer Applications (BCA)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Computer Applications (BCA)") {%> selected <%}%> >Bachelor of Computer Applications (BCA)</option>
+                                    <option value="Bachelor of Commerce (BCom)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Commerce (BCom)") {%> selected <%}%> >Bachelor of Commerce (BCom)</option>
+                                    <option value="Bachelor of Fine Arts (BFA)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Fine Arts (BFA)") {%> selected <%}%> >Bachelor of Fine Arts (BFA)</option>
+                                    <option value="Bachelor of Management Studies (BMS)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Management Studies (BMS)") {%> selected <%}%> >Bachelor of Management Studies (BMS)</option>
+                                    <option value="Bachelor of Science (BSc)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Science (BSc)") {%> selected <%}%> >Bachelor of Science (BSc)</option>
+                                    <option value="Bachelor of Technology (BTech)" <% if(typeof currentUser.program != 'undefined' && currentUser.program === "Bachelor of Technology (BTech)") {%> selected <%}%> >Bachelor of Technology (BTech)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- year -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="year">Year</label></div>
+                                <div class="field-body">
+                                    <select name="year" id="year">
+                                    <option value="">Select your year</option>
+                                    <option value="1" <% if(typeof currentUser.year != 'undefined' && currentUser.year === "1") {%> selected <%}%> >I</option>
+                                    <option value="2" <% if(typeof currentUser.year != 'undefined' && currentUser.year === "2") {%> selected <%}%> >II</option>
+                                    <option value="3" <% if(typeof currentUser.year != 'undefined' && currentUser.year === "3") {%> selected <%}%> >III</option>
+                                    <option hidden id="year-4" value="4" <% if(typeof currentUser.year != 'undefined' && currentUser.year === "4") {%> selected <%}%> >IV</option>
+                                    <option hidden id="year-5" value="5" <% if(typeof currentUser.year != 'undefined' && currentUser.year === "5") {%> selected <%}%> >V</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- branch -->
+
+                            <div class="input-field">
+                                <div class="field-title"><label for="branch">Branch</label></div>
+                                <div class="field-body"><input type="text" name="branch" id="branch" value="<%= typeof currentUser.branch != 'undefined' ? currentUser.branch : '' %>"></div>
+                            </div>
+
+                            <!-- buttons -->
+
+                            <div class="btn-wrapper">
+                                <div class="btn-cp"><a href="/fms.edu.in/users/profile">Cancel</a></div>
+                                <input type="submit" class="btn-ep" value="Update Profile">
+                            </div>
+                        </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <%- include ("../partials/footer")%>

@@ -87,3 +87,20 @@ function myFunction4() {
         fileTxt.innerHTML = "No file chosen, yet.";
     }
 }
+
+// edit profile program type - years event
+function myFunction5() {
+    const program = document.getElementById("program");
+    const year4 = document.getElementById("year-4");
+    const year5 = document.getElementById("year-5");
+    if (program.value === "Bachelor of Architecture (BArch)") {
+        year4.hidden = false;
+        year5.hidden = false;
+    } else if (program.value === "Bachelor of Technology (BTech)" || program.value === "Bachelor of Science (BSc)") {
+        year4.hidden = false;
+        year5.hidden = true;
+    } else {
+        year4.hidden = true;
+        year5.hidden = true;
+    }
+}

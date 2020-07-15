@@ -1,4 +1,4 @@
-<%- include ("../../partials/home-layout")%>
+<%- include ("../partials/home-layout")%>
 
     <section>
         <header>
@@ -16,50 +16,37 @@
                         <li>
                             <div class="ud-title">Email Address</div>
                             <div class="ud-value">
-                                <!-- <%=currentUser.email%> -->
-                                value
+                                <%=currentUser.email%>
                             </div>
                         </li>
                         <li>
                             <div class="ud-title">Phone Number</div>
                             <div class="ud-value">
                                 <%=currentUser.phone%>
-                                    value
                             </div>
                         </li>
                         <li>
                             <div class="ud-title">Gender</div>
                             <div class="ud-value">
                                 <%=typeof currentUser.gender != 'undefined' ? currentUser.gender : '-'%>
-                                    value
                             </div>
                         </li>
                         <li>
                             <div class="ud-title">Year</div>
                             <div class="ud-value">
                                 <%=typeof currentUser.year != 'undefined' ? currentUser.year : '-'%>
-                                    value
                             </div>
                         </li>
                         <li>
                             <div class="ud-title">Program Type</div>
                             <div class="ud-value">
                                 <%=typeof currentUser.program != 'undefined' ? currentUser.program : '-'%>
-                                    value
                             </div>
                         </li>
                         <li>
                             <div class="ud-title">Branch</div>
                             <div class="ud-value">
                                 <%=typeof currentUser.branch != 'undefined' ? currentUser.branch : '-'%>
-                                    value
-                            </div>
-                        </li>
-                        <li>
-                            <div class="ud-title">Section</div>
-                            <div class="ud-value">
-                                <%=typeof currentUser.section != 'undefined' ? currentUser.section : '-'%>
-                                    value
                             </div>
                         </li>
                     </ul>
@@ -69,31 +56,25 @@
                     </div>
                 </div>
 
-                <!-- <div class="sub-content no-content"></div> -->
-
                 <div class="sub-content cd-content">
                     <p class="content-title tt-dboard">Courses</p>
                     <ul class="content-body pts-dboard">
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/course"><i class="fas fa-angle-double-right"></i>  Course $ - Title</a></li>
 
+                        <%currentUser.courses.forEach(course => {%>
+                            <li class="db-li"><a href="/fms.edu.in/course/<%=course._id%>"><i class="fas fa-angle-double-right"></i>  (<%=course.code%>) <%=course.name%></a></li>
+
+                            <%});
+                        %>
                     </ul>
                 </div>
 
-                <div class="sub-content cd-content">
-                    <p class="content-title tt-dboard">Classes</p>
+                <div class="sub-content bt-content">
+                    <p class="content-title tt-dboard">Batches</p>
                     <ul class="content-body pts-dboard">
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-                        <li class="db-li"><a href="/fms.edu.in/class"><i class="fas fa-angle-double-right"></i>  Class Group $</a></li>
-
+                        <%batches.forEach(batch => {%>
+                            <li class="db-li"><a href="#"><i class="fas fa-angle-double-right"></i>  <%=batch.course.name%> - <%=batch.section.name%></a></li>
+                            <%});
+                        %>
                     </ul>
                 </div>
 
@@ -102,4 +83,4 @@
 
     </section>
 
-    <%- include ("../../partials/footer")%>
+    <%- include ("../partials/footer")%>
