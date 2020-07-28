@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -175,21 +176,28 @@ nav .logo {
 }
 
 .logo .logo-icon {
-    border-radius: 10px;
+    /* border-radius: 10px;
     height: 80px;
     width: 90px;
+    align-self: center; */
+    border-radius: 10px;
+    height: 55px;
+    width: 65px;
     align-self: center;
-    /* background: url(../img/dit-logo-tr-b.jpg) no-repeat; */
-    /* background: url(../img/pc-logo.png) no-repeat; */
-    /* background-size: contain; */
-    /* background-position: center; */
+    background: url(../images/fmsLOGO.png) no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .logo .logo-title {
+    margin-left: 1%;
     letter-spacing: 1px;
-    font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: #021f04;
+    font-size: 40px;
     font-weight: bolder;
+    font-family: Bitter;
+    /* color: #020f03; */
+    letter-spacing: 1px;
+    color: #021f04;
 }
 
 nav .nav-right {
@@ -309,6 +317,14 @@ section {
     }
     nav .logo {
         margin-left: 5%;
+    }
+    .logo .logo-icon {
+        height: 45px;
+        width: 55px;
+    }
+    .logo .logo-title {
+        letter-spacing: 0.5px;
+        font-size: 35px;
     }
     nav .nav-right {
         margin-right: 6.5rem;
