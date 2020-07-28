@@ -1,0 +1,269 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100%;
+    background: #abbaab;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #ffffff, #abbaab);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #ffffff, #abbaab);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.form-box {
+    padding: 20px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f8f8f8;
+}
+
+.form-title {
+    font-size: 25px;
+    text-transform: uppercase;
+    padding: 5px;
+}
+
+.field,
+.role-field {
+    position: relative;
+    width: 400px;
+    height: 55px;
+    margin: 15px;
+}
+
+.field-btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.field input,
+.field-btn a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    padding: 15px 20px;
+    font-size: 18px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 8px;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1), inset 4px 4px 10px rgba(0, 0, 0, 0.05), inset -4px -4px 10px rgba(255, 255, 255, 1), 4px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.role-field {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    border: none;
+    background: transparent;
+    padding: 15px 20px;
+    font-size: 18px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 8px;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1), inset 4px 4px 10px rgba(0, 0, 0, 0.05), inset -4px -4px 10px rgba(255, 255, 255, 1), 4px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.role-field .role-field-box {
+    flex: 5;
+}
+
+.role-field .role-field-box p {
+    color: #ccc;
+}
+
+.role-field .roles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.desc-field {
+    height: 150px;
+}
+
+.field-btn a {
+    text-decoration: none;
+    font-family: Arial;
+}
+
+.field input[type="submit"],
+.field-btn a {
+    font-size: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: black;
+    box-shadow: -3px -3px 10px rgba(255, 255, 255, 1), inset 3px 3px 10px rgba(255, 255, 255, 1), inset -3px -3px 10px rgba(255, 255, 255, 1), 3px 3px 10px rgba(255, 255, 255, 1);
+    color: white;
+}
+
+.field-btn input[type="submit"],
+.field-btn a {
+    position: relative;
+    width: 40%;
+}
+
+.field input[type="submit"]:hover,
+.field-btn a:hover {
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 1), inset 5px 5px 10px rgba(255, 255, 255, 1), inset -5px -5px 10px rgba(255, 255, 255, 1), 5px 5px 10px rgba(255, 255, 255, 1);
+}
+
+.field input::placeholder {
+    color: #ccc;
+}
+
+.toggle {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: url("../images/visible.png");
+    background-size: cover;
+    cursor: pointer;
+}
+
+.toggle.hide {
+    background: url("../images/hidden.png");
+    background-size: cover;
+}
+
+.form-suggest {
+    font-size: 16px;
+    color: rgb(27, 27, 27);
+}
+
+.form-suggest a {
+    color: rgb(27, 27, 27);
+    text-decoration: underline;
+}
+
+.form-suggest a:hover {
+    color: rgb(39, 39, 240);
+}
+
+
+/* error/success flash message  */
+
+.alert {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin: 1rem 0;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    text-align: center;
+    transition: opacity .15s linear;
+}
+
+.alert-dismissible {
+    padding-right: 4rem;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+
+/* flash message close button */
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: .75rem 1.25rem;
+    color: inherit;
+}
+
+@media (max-width: 700px) {
+    .form-container {
+        background: #fff;
+    }
+    .form-box {
+        padding: 15px;
+    }
+    .form-title {
+        font-size: 20px;
+    }
+    .field,
+    .role-field {
+        width: 250px;
+        height: 45px;
+    }
+    .role-field {
+        display: block;
+    }
+    .role-field .role-field-box p {
+        display: none;
+    }
+    .field input,
+    .role-field {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    .field input[type="submit"],
+    .field-btn a {
+        font-size: 18px;
+    }
+    .desc-field {
+        height: 150px;
+    }
+    .toggle {
+        right: 15px;
+        width: 25px;
+        height: 25px;
+    }
+}
