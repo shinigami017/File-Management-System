@@ -294,7 +294,7 @@ router.get("/logout", function(request, response) {
     response.redirect("/fms.edu.in/users/login");
 });
 
-router.post("/add-batch", isLoggedIn, function(request, response) {
+router.post("/addbatch", isLoggedIn, function(request, response) {
     const code = request.body.code;
     let section = request.body.section;
     Course.findOne({ code: code }, function(error, foundCourse) {
