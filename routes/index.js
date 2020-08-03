@@ -12,7 +12,7 @@ router.get("/", forwardAuthenticated, function(request, response) {
     response.redirect("/fms.edu.in");
 });
 
-router.post("/addsection", function(request, response) {
+router.post("/addsections", function(request, response) {
     const course = request.body.course;
     const sec = ['A', 'B', 'C', 'D', 'E', 'F'];
     sec.forEach((i) => {
