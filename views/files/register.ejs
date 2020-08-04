@@ -10,37 +10,27 @@
                 <form method="POST" action="/fms.edu.in/users/register">
 
                     <!-- username -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputUsername" class="sr-only">Username</label> -->
                         <input type="text" name="username" id="inputUsername" placeholder="Enter username" value="<%= typeof username != 'undefined' ? username : '' %>" autofocus>
                     </div>
 
                     <!-- firstname -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputFirstName" class="sr-only">First Name</label> -->
                         <input type="text" name="firstname" id="inputFirstName" placeholder="Enter first name" value="<%= typeof firstname != 'undefined' ? firstname : '' %>">
                     </div>
 
                     <!-- lastname -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputLastName" class="sr-only">Last Name</label> -->
                         <input type="text" name="lastname" id="inputLastName" placeholder="Enter last name" value="<%= typeof lastname != 'undefined' ? lastname : '' %>">
                     </div>
 
                     <!-- email -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputEmail" class="sr-only">Email address</label> -->
                         <input type="email" name="email" id="inputEmail" placeholder="Enter email address" value="<%= typeof email != 'undefined' ? email : '' %>">
                     </div>
 
                     <!-- phone -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputPhone" class="sr-only">Phone number</label> -->
                         <input type="tel" name="phone" id="inputPhone" pattern="[789][0-9]{9}" placeholder="Enter phone number" value="<%= typeof phone != 'undefined' ? phone : '' %>">
                     </div>
 
@@ -66,18 +56,14 @@
                     </div>
 
                     <!-- password -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputPassword" class="sr-only">Password</label> -->
                         <input type="password" name="password" id="password1" placeholder="Enter a password" value="<%= typeof password != 'undefined' ? password : '' %>">
                         <div class="toggle" data-list="1">
                         </div>
                     </div>
 
                     <!-- confirm password -->
-                    <!-- <div class="form-group"> -->
                     <div class="field">
-                        <!-- <label for="inputPassword2" class="sr-only">Confirm Password</label> -->
                         <input type="password" name="password2" id="password2" placeholder="Confirm password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
                         <div class="toggle" data-list="2"></div>
                     </div>

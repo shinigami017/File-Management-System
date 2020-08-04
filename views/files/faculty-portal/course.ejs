@@ -30,9 +30,11 @@
                                 <div class="class-rb-btn">
                                     <%course.sections.sort();%>
                                         <%course.sections.forEach((section) => {%>
-                                            <input class="class-rb" type="checkbox" id="rb-<%=section.name%>" name="sections" value="<%=section._id%>">
-                                            <label for="rb-<%=section.name%>">Section <%=section.name%></label>
-                                            <%});%>
+                                            <%if(faculty.batches.some((batch) => {return (JSON.stringify(batch.course.id) === JSON.stringify(course._id) && JSON.stringify(batch.section.id) === JSON.stringify(section._id));})){%>
+                                                <input class="class-rb" type="checkbox" id="rb-<%=section.name%>" name="sections" value="<%=section._id%>">
+                                                <label for="rb-<%=section.name%>">Section <%=section.name%></label>
+                                                <%}%>
+                                                    <%});%>
                                 </div>
                             </div>
                             <div class="form-element">
@@ -61,18 +63,6 @@
                                     </div>
                                     <%});%>
                                         <%}%>
-                                            <!-- <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
-                        </div>
-                        <div class="content-ps">
-                            <div class="t-title">Task Title</div>
-                            <div class="t-link"><a href="/fms.edu.in/course/task/all-submissions">Go to activity</a></div>
-                        </div> -->
                     </div>
 
                 </div>
