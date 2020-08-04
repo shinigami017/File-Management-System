@@ -9,31 +9,43 @@ For simple demo of the application i have made a fake setup with some demo facul
 
 So, for testing purposes you can visit the site and login with the following user details : 
 
-1. Teacher role 1
+1. Faculty role 1
     ```sh
     "username": "FMSF000001",
     "password": "123456"
     ```
 
-2. Teacher role 2
+2. Faculty role 2
     ```sh
     "username": "FMSF000002",
     "password": "123456"
     ```
 
-3. Student role 1
+3. Faculty role 3
+    ```sh
+    "username": "FMSF000003",
+    "password": "123456"
+    ```
+
+4. Faculty role 4
+    ```sh
+    "username": "FMSF000004",
+    "password": "123456"
+    ```
+
+4. Student role 1
     ```sh
     "username": "FMSS000001",
     "password": "123456"
     ```
 
-4. Student role 2
+5. Student role 2
     ```sh
     "username": "FMSS000002",
     "password": "123456"
     ```
 
-5. Student role 3
+6. Student role 3
     ```sh
     "username": "FMSS000003",
     "password": "123456"
@@ -54,7 +66,7 @@ So, for testing purposes you can visit the site and login with the following use
 
 4. Launch the server 
 ```sh
-   npm run start
+   npm run launch
 ``` 
 
 5. Open your browser and browse to ```http://localhost:3000``` (You are good to go!)
