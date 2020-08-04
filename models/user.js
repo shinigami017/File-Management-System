@@ -34,7 +34,7 @@ var userSchema = new mongoose.Schema({
     },
     branch: {
         type: String,
-        required: true
+        required: false
     },
     role: {
         type: String,
