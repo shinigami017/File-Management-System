@@ -23,7 +23,8 @@ const storage = multer.diskStorage({
         cb(null, 'data/files');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+        let newfilename = currentUser.username + "_" + file.originalname;
+        cb(null, newfilename);
     }
 });
 
@@ -83,7 +84,7 @@ router.get("/course/:cid", isLoggedIn, function(request, response) {
                 }).sort((a, b) => {
                     return (a.date < b.date) ? 1 : -1;
                 });
-                return response.render("files/faculty-portal/course", { currentUser: currentUser, course: foundCourse, tasks: tasks });
+                return response.render("files/faculty-portal/course", { currentUser: currentUser, course: foundCourse, tasks: tasks, faculty: foundFaculty });
             });
         } else {
             // for student

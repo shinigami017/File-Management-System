@@ -20,10 +20,9 @@ router.post("/addsections", function(request, response) {
         newSection.save(function(error, section) {
             if (error) {
                 console.log(error);
-                return console.log("Section not added");
+                return response.send("Sections not added");
             }
-            console.log("Section added successfully");
-            console.log(section);
+            // console.log("Section added successfully");
         });
     });
     response.end("Sections added");
@@ -35,7 +34,7 @@ router.post("/addcourse", function(request, response) {
     let sections = [];
     Section.find({ course: c }, function(error, foundSections) {
         if (error) {
-            return console.log("Sections not found");
+            return response.send("Sections not found");
         }
         foundSections.forEach((sec) => {
             sections.push(sec._id);
@@ -43,10 +42,9 @@ router.post("/addcourse", function(request, response) {
         let newCourse = new Course({ name: name, code: code, sections: sections });
         newCourse.save(function(error, course) {
             if (error) {
-                return console.log("Course not added");
+                return response.send("Course not added");
             }
-            console.log("Course added");
-            response.json(course);
+            return response.json(course);
         });
     });
 });

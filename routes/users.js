@@ -299,8 +299,12 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
     let section = request.body.section;
     Course.findOne({ code: code }, function(error, foundCourse) {
         if (error) {
+            console.log("Incorrect\n---------------------------------------------------------------");
             console.log(error);
             return response.json(error);
+        }
+        if (foundCourse === null) {
+            return response.json({ success: "false", msg: "Course not found" });
         }
         if (request.user.role === "student") {
             if (typeof foundCourse.students === "undefined") {
@@ -315,15 +319,12 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
             }
         } else {
             if (typeof foundCourse.faculties === "undefined") {
-                console.log("foundCourse.faculties === undefined");
                 foundCourse.faculties = [];
                 foundCourse.faculties.push({ id: request.user._id, username: request.user.username });
             } else {
                 // Find if course do not already have this faculty
                 if (!foundCourse.faculties.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
                     foundCourse.faculties.push({ id: request.user._id, username: request.user.username });
-                } else {
-                    console.log("Course already have this faculty");
                 }
             }
         }
@@ -340,8 +341,6 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
                 // Find if user do not already have this course
                 if (!foundUser.courses.find(e => (JSON.stringify(e) === JSON.stringify(savedCourse._id)))) {
                     foundUser.courses.push(savedCourse._id);
-                } else {
-                    console.log("User already has this course");
                 }
                 foundUser.save(function(error, savedUser) {
                     if (error) {
@@ -362,8 +361,6 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
                                 // Find if section do not already have this student
                                 if (!foundSection.students.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
                                     foundSection.students.push({ id: request.user._id, username: request.user.username });
-                                } else {
-                                    console.log("Section already has this student");
                                 }
                             }
                         } else {
@@ -374,8 +371,6 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
                                 // Find if section do not already have this faculty
                                 if (!foundSection.faculties.find(e => (JSON.stringify(e.id) === JSON.stringify(request.user._id) && e.username === request.user.username))) {
                                     foundSection.faculties.push({ id: request.user._id, username: request.user.username });
-                                } else {
-                                    console.log("Section already has this faculty");
                                 }
                             }
                         }
@@ -394,7 +389,7 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
                                     if (!foundStudent.batches.find(e => (JSON.stringify(e.course) === JSON.stringify({ id: savedCourse._id, name: savedCourse.name }) && JSON.stringify(e.section) === JSON.stringify({ id: savedSection._id, name: savedSection.name })))) {
                                         foundStudent.batches.push({ course: { id: savedCourse._id, name: savedCourse.name }, section: { id: savedSection._id, name: savedSection.name } });
                                     } else {
-                                        console.log("Student is already enrolled for this batch");
+                                        return response.json({ success: "false", msg: "Student is already enrolled for this batch" });
                                     }
                                     foundStudent.save(function(error, savedStudent) {
                                         if (error) {
@@ -414,7 +409,7 @@ router.post("/addbatch", isLoggedIn, function(request, response) {
                                     if (!foundFaculty.batches.find(e => (JSON.stringify(e.course) === JSON.stringify({ id: savedCourse._id, name: savedCourse.name }) && JSON.stringify(e.section) === JSON.stringify({ id: savedSection._id, name: savedSection.name })))) {
                                         foundFaculty.batches.push({ course: { id: savedCourse._id, name: savedCourse.name }, section: { id: savedSection._id, name: savedSection.name } });
                                     } else {
-                                        console.log("Faculty is already registered with this batch");
+                                        return response.json({ success: "false", msg: "Faculty is already registered with this batch" });
                                     }
                                     foundFaculty.save(function(error, savedFaculty) {
                                         if (error) {
