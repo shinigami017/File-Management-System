@@ -29,7 +29,7 @@
                     <ul class="content-body sub-status">
                         <li class="status-bar">
                             <div class="status-tt">Submission Status</div>
-                            <% if(submission === "undefined"){ %>
+                            <% if(typeof submission === "undefined"){ %>
                                 <div class="status-tb">No attempt</div>
                                 <%} else {%>
                                     <div class="status-tb">Submitted for grading</div>
@@ -37,7 +37,7 @@
                         </li>
                         <li class="status-bar">
                             <div class="status-tt">Grading Status</div>
-                            <% if(submission === "undefined"){ %>
+                            <% if(typeof submission === "undefined"){ %>
                                 <div class="status-tb">Not graded</div>
                                 <% }else{ %>
                                     <div class="status-tb">
@@ -54,7 +54,7 @@
                         </li>
                         <li class="status-bar status-rm">
                             <div class="status-tt">Remarks</div>
-                            <% if(submission === "undefined"){ %>
+                            <% if(typeof submission === "undefined"){ %>
                                 <div class="status-tb">
                                     No remarks
                                 </div>
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="btn-box">
-                    <% if(submission === "undefined"){ %>
+                    <% if(typeof submission === "undefined"){ %>
                         <a href="/fms.edu.in/course/<%=course._id%>/activity/<%=task._id%>/submission">Add Submission</a>
                         <%} else {%>
                             <a download="<%=submission.filename%>" href="/<%=submission.filepath%>/<%=submission.filename%>" target="_blank">
